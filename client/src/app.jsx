@@ -18,6 +18,7 @@ export default function App() {
   useEffect(() => {
     if (!isPending && !error && data) {
       setNodes(data.data);
+      console.log(data.data);
     }
   }, [isPending, error, data,setNodes]);
 

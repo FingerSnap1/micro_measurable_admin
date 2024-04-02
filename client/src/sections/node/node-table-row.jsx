@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
@@ -11,12 +12,16 @@ import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
+import { useNodeInfo } from 'src/hooks/useNodeInfo';
+
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableRow({
+export default function NodeTableRow({
+  id,
+  nodeAddress,
   selected,
   location,
   latitude,
@@ -25,6 +30,9 @@ export default function UserTableRow({
   status,
   handleClick,
 }) {
+
+  const { deleteNodeMutation } = useNodeInfo();
+
   const [open, setOpen] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -34,6 +42,30 @@ export default function UserTableRow({
   const handleCloseMenu = () => {
     setOpen(null);
   };
+
+  const handleDeleteButton = () => {
+    deleteNodeMutation.mutate(id);
+    console.log(id);
+    setOpen(null);
+  }
+
+  const navigate = useNavigate();
+
+  const handleModifyButton = () => {
+    setOpen(null);
+    navigate(
+      'modify', 
+      { state: { 
+        id,
+        nodeAddress,
+        location,
+        longitude,
+        latitude,
+      } }
+    );
+  }
+
+
 
   return (
     <>
@@ -78,12 +110,12 @@ export default function UserTableRow({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleModifyButton}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
         </MenuItem>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDeleteButton} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
         </MenuItem>
@@ -92,7 +124,9 @@ export default function UserTableRow({
   );
 }
 
-UserTableRow.propTypes = {
+NodeTableRow.propTypes = {
+  id: PropTypes.any,
+  nodeAddress: PropTypes.any,
   handleClick: PropTypes.func,
   battery: PropTypes.any,
   location: PropTypes.any,

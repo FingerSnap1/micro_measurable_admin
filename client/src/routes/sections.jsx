@@ -5,6 +5,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 
 import { NodeView } from 'src/sections/node/view';
 import { NodeAddView } from 'src/sections/node/add';
+import { NodeModifyView } from 'src/sections/node/modify';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const ManagerPage = lazy(() => import('src/pages/manager'));
@@ -37,6 +38,7 @@ export default function Router() {
           children: [
             { path: '', element: <NodeView />},
             { path: 'add', element: <NodeAddView />},
+            { path: 'modify', element: <NodeModifyView />},
           ]
         },
       ],

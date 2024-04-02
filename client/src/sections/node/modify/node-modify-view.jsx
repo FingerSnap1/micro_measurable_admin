@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -17,28 +18,42 @@ import { bgGradient } from 'src/theme/css';
 
 // ----------------------------------------------------------------------
 
-export default function NodeAddView() {
+export default function NodeModifyView()  {
   const theme = useTheme();
 
-  const { addNodeMutation } = useNodeInfo();
+  const { updateNodeMutation } = useNodeInfo();
 
   const router = useRouter();
+  const routerLocation = useLocation();
+
+  const { id, nodeAddress, location, latitude, longitude } = routerLocation.state || {};
 
   const handleBackButton = () => {
     router.back();
   };
 
-  const [nodeAddressState, setNodeAddressState] = useState('')
-  const [locationState, setLocationState] = useState('');
-  const [latitudeState, setLatitudeState] = useState('');
-  const [longitudeState, setLongitudeState] = useState('');
+
+  const handleCompleteButton = () => {
+
+    const newNode = {
+        id,
+        nodeAddress,
+        location: locationState,
+        latitude: latitudeState,
+        longitude: longitudeState,
+      };
+
+    updateNodeMutation.mutate(newNode);
+    router.back();
+  };
+
+  const [locationState, setLocationState] = useState(location);
+  const [latitudeState, setLatitudeState] = useState(latitude);
+  const [longitudeState, setLongitudeState] = useState(longitude);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     switch(name) {
-        case 'nodeAddress':
-            setNodeAddressState(value);
-            break;
         case 'location':
             setLocationState(value);
             break;
@@ -53,23 +68,10 @@ export default function NodeAddView() {
     }
   };
 
-  const handleCompleteButton = () => {
-
-    const newNode = {
-      nodeAddress: nodeAddressState,
-      location: locationState,
-      latitude: latitudeState,
-      longitude: longitudeState
-    };
-
-    addNodeMutation.mutate(newNode);
-    router.back();
-  };
-
   const renderForm = (
     <>
       <Stack spacing={3} sx={{ my: 3 }}>
-        <TextField name="nodeAddress" label="노드 번호" value={nodeAddressState} onChange={handleChange} />
+        <TextField name="nodeAddress" label="노드 번호" value={nodeAddress} onChange={handleChange}/>
 
         <TextField name="location" label="노드 명칭" value={locationState} onChange={handleChange}/>
 
@@ -128,7 +130,7 @@ export default function NodeAddView() {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">노드 정보 추가</Typography>
+          <Typography variant="h4">노드 정보 수정</Typography>
 
           <Divider sx={{ my: 3 }}>
             {/* <Typography variant="body2" sx={{ color: 'text.secondary' }}>

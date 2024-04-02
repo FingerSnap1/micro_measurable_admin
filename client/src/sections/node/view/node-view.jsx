@@ -17,10 +17,10 @@ import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
 import TableNoData from '../table-no-data';
-import UserTableRow from '../user-table-row';
-import UserTableHead from '../user-table-head';
+import UserTableRow from '../node-table-row';
+import UserTableHead from '../node-table-head';
 import TableEmptyRows from '../table-empty-rows';
-import UserTableToolbar from '../user-table-toolbar';
+import UserTableToolbar from '../node-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
 // ----------------------------------------------------------------------
@@ -146,6 +146,8 @@ export default function NodeView() {
                   .map((row, index) => (
                     <UserTableRow
                       key={index}
+                      id={row.id}
+                      nodeAddress={row.nodeAddress}
                       location={row.location}
                       longitude={row.longitude}
                       status='active'
