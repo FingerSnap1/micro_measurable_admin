@@ -6,6 +6,7 @@ import ThemeProvider from 'src/theme';
 import React, { useEffect } from 'react';
 import { useNodeInfo } from './hooks/useNodeInfo';
 import useNodeInfoStore from './store/nodeInfoStore';
+
 // ----------------------------------------------------------------------
 
 export default function App() {

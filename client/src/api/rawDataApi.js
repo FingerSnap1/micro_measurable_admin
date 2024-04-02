@@ -2,9 +2,9 @@ import axiosInstance from './axiosInstance';
 
 const requestURL = "/api/rawData/day";
 
-export const fetchRawData = async () => {
+export const fetchRawData = async (date) => {
     const requestBody = {
-        date: "2024-01-08",
+        date,
     }
     const response = await axiosInstance.post(requestURL, requestBody);
 

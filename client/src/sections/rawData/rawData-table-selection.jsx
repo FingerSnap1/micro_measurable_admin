@@ -5,11 +5,10 @@ import DatePicker from "react-datepicker";
 import { FaCalendarAlt } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 
-import Dropdown from 'src/components/dropdown/dropdown';
+import useRawDataStore from 'src/store/rawDataStore';
+import useNodeInfoStore from 'src/store/nodeInfoStore';
 
-import {
-    selectLocationOptions
-} from "../../constants/selectOption";
+import Dropdown from 'src/components/dropdown/dropdown';
 
 
 // ----------------------------------------------------------------------
@@ -82,26 +81,33 @@ const CustomInput = React.forwardRef(({ onClick }, ref) => (
 ));
 
 CustomInput.propTypes = {
-    onClick: PropTypes.func.isRequired, // 클릭 이벤트 핸들러 함수이므로, func 타입이며 필수입니다.
+    onClick: PropTypes.func, // 클릭 이벤트 핸들러 함수이므로, func 타입이며 필수입니다.
 };
   
 function RawDataTableSelection(){
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [selectedLocation, setSelectedLocation] = useState(selectLocationOptions[0]);
+    const { nodes } = useNodeInfoStore();
+    const { setSelectedDate } = useRawDataStore();
+
+    const nodeLocation = nodes.map((row) => (
+        row.location
+    ));
+
+    const [selectedDateState, setSelectedDateState] = useState(new Date());
+    const [selectedLocationState, setSelectedLocationState] = useState(nodeLocation[0]);
 
     const handleDateSelect = (date) => {
+        setSelectedDateState(date);
         setSelectedDate(date);
     }
 
     const handleLocationSelect = (location) => {
-        setSelectedLocation(location);
+        setSelectedLocationState(location);
     }
 
     const handleSearchButton = () => {
         console.log("검색버튼 누름");
     };
-
 
     return (
         <div>
@@ -110,8 +116,8 @@ function RawDataTableSelection(){
                     <FlexDiv>
                         <FixedP>측정위치</FixedP>
                         <Dropdown
-                            optionData={selectLocationOptions}
-                            selectedValue={selectedLocation}
+                            optionData={nodeLocation}
+                            selectedValue={selectedLocationState}
                             handleSelectedValue={handleLocationSelect}
                         />
                     </FlexDiv>
@@ -119,9 +125,9 @@ function RawDataTableSelection(){
                     <FlexDiv>
                         <FixedP>측정일자</FixedP>
                         <StyledDiv>
-                            <div>{selectedDate.toLocaleDateString()}</div>
+                            <div>{selectedDateState.toLocaleDateString()}</div>
                             <StyledDatePicker
-                                selected={selectedDate}
+                                selected={selectedDateState}
                                 onChange={date => handleDateSelect(date)}
                                 dateFormat="yyyy MMMM dd"
                                 customInput={<CustomInput />}

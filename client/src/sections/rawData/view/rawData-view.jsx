@@ -34,10 +34,11 @@ export default function RawDataView() {
   
   useEffect(() => {
     if (!isPending && !error && data) {
+      console.log("hello");
+      console.log(data.data);
       setRawData(data.data);
     }
   }, [isPending, error, data,setRawData]);
-
 
 
   const [page, setPage] = useState(0);
