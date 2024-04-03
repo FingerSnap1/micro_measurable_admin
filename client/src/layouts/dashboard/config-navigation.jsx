@@ -15,12 +15,12 @@ const navConfig = [
   {
     title: 'error data',
     path: '/errorData',
-    icon: icon('ic_user'),
+    icon: icon('ic_disabled'),
   },
   {
     title: 'raw data',
     path: '/rawData',
-    icon: icon('ic_user'),
+    icon: icon('ic_data'),
   },
   {
     title: 'manager',
@@ -30,7 +30,7 @@ const navConfig = [
   {
     title: 'node',
     path: '/node',
-    icon: icon('ic_user'),
+    icon: icon('ic_node'),
   },
   {
     title: 'login',
