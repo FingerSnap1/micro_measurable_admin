@@ -12,8 +12,8 @@ import TablePagination from '@mui/material/TablePagination';
 
 import { useRawData } from 'src/hooks/useRawData';
 
-import { rawData } from 'src/_mock/rawData';
 import useRawDataStore from 'src/store/rawDataStore';
+import useNodeInfoStore from 'src/store/nodeInfoStore';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -30,7 +30,15 @@ import RawDataTableSelection from '../rawData-table-selection';
 export default function RawDataView() {
 
   const { isPending, error, data } = useRawData();
-  const { setRawData } = useRawDataStore();
+  const { setRawData,rawData } = useRawDataStore();
+
+  const { nodes } = useNodeInfoStore();
+
+
+  const nodeLocation = nodes.reduce((acc, row) => {
+    acc[row.nodeAddress] = row.location;
+    return acc;
+  }, {});
   
   useEffect(() => {
     if (!isPending && !error && data) {
@@ -105,15 +113,15 @@ export default function RawDataView() {
                   .map((row) => (
                     <RawDataTableRow
                       key={row.id}
-                      date={row.date}
-                      location={row.location}
+                      date={`${row.date} ${row.timestamp}`}
+                      location={nodeLocation[row.nodeAddress]}
                       pm25={row.pm25}
                       pm10={row.pm10}
                       ch2o={row.ch2o}
                       temperature={row.temperature}
                       humidity={row.humidity}
-                      wind_direction={row.wind_direction}
-                      wind_speed={row.wind_speed}
+                      wind_direction={row['wind-direction']}
+                      wind_speed={row['wind-speed']}
                     />
                   ))}
 
