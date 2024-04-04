@@ -6,6 +6,8 @@ import { alpha, useTheme } from '@mui/material/styles';
 
 import { useRouter } from 'src/routes/hooks';
 
+import allowedEmails from 'src/config/allowedEmails';
+
 import Iconify from '../iconify/iconify';
 
 function GoogleSignInButton() {
@@ -18,9 +20,16 @@ function GoogleSignInButton() {
         const provider = new GoogleAuthProvider();
         const auth = getAuth();
         signInWithPopup(auth, provider).then((result) => {
+
             console.log(result.user);
             console.log(getAuth());
-            router.push('/');
+
+            if(allowedEmails.includes(result.user.email)){
+                router.push('/');
+            }
+            else{
+                alert("이 계정은 접근이 허용되지 않았습니다.");
+            }
         }).catch((error) => {
             console.log(error);
         });

@@ -99,17 +99,10 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">Sign in to AirPlay</Typography>
-
-          {/* <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-            Don’t have an account?
-            <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-              Get started
-            </Link>
-          </Typography> */}
+          <Typography variant="h4" sx={{ my: 3 }}>Sign in to AirPlay</Typography>
 
 
-          <GoogleSignInButton/>
+          <GoogleSignInButton />
           
 
           <Divider sx={{ my: 3 }}>
