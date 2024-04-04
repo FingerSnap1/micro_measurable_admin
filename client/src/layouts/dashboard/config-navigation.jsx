@@ -13,14 +13,9 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'error data',
-    path: '/errorData',
-    icon: icon('ic_disabled'),
-  },
-  {
-    title: 'raw data',
-    path: '/rawData',
-    icon: icon('ic_data'),
+    title: 'node',
+    path: '/node',
+    icon: icon('ic_node'),
   },
   {
     title: 'manager',
@@ -28,20 +23,25 @@ const navConfig = [
     icon: icon('ic_user'),
   },
   {
-    title: 'node',
-    path: '/node',
-    icon: icon('ic_node'),
+    title: 'raw data',
+    path: '/rawData',
+    icon: icon('ic_data'),
   },
   {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
+    title: 'error data',
+    path: '/errorData',
     icon: icon('ic_disabled'),
   },
+  // {
+  //   title: 'login',
+  //   path: '/login',
+  //   icon: icon('ic_lock'),
+  // },
+  // {
+  //   title: 'Not found',
+  //   path: '/404',
+  //   icon: icon('ic_disabled'),
+  // },
 ];
 
 export default navConfig;
