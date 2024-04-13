@@ -6,6 +6,8 @@ import { useAuthStatus } from "src/hooks/useAuthStatus";
 
 import allowedEmails from 'src/config/allowedEmails';
 
+// ----------------------------------------------------------------------
+
 function PrivateRoute({ element }) {
   const { isAuthenticated, loading } = useAuthStatus();
   const auth = getAuth();

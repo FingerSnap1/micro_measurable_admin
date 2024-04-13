@@ -23,6 +23,8 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@faker-js/faker": "^8.1.0",
+    "@googlemaps/js-api-loader": "^1.16.6",
+    "@googlemaps/react-wrapper": "^1.1.35",
     "@iconify/react": "^4.1.1",
     "@mui/lab": "^5.0.0-alpha.147",
     "@mui/material": "^5.14.12",
