@@ -50,22 +50,20 @@ const GoogleMap = () => {
         console.log(node.location);
       });
 
-      console.log(node);
     });
 
 
   }, [ref, map, nodes]);
 
-  const title = "Node Location"; 
-  const subheader = "total 15 "; 
+  const title = "히딩크"; 
+  const subheader = "이신원 관리자"; 
 
   return (
-    <Card style={{ height: '500px' }}>
-      <CardHeader title={title} subheader={subheader} />
-      <div ref={ref} style={{ width: "100%", height: "85.3%" }}/>
+    <Card style={{ height: 500, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <CardHeader title={title} subheader={subheader}/>
+      <div ref={ref} style={{ width: "100%", height: "82%" }}/>
     </Card>
   );
-
 
 };
 
