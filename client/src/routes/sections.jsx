@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
+import { NodeInfoProvider } from 'src/providers/nodeInfoProviders';
 
 import { NodeView } from 'src/sections/node/view';
 import { NodeAddView } from 'src/sections/node/add';
@@ -22,15 +23,16 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 export default function Router() {
 
-  
 
   const routes = useRoutes([
     {
       element: <PrivateRoute element= {(
         <DashboardLayout>
-          <Suspense>
-            <Outlet />
-          </Suspense>
+          <NodeInfoProvider>
+            <Suspense>
+              <Outlet />
+            </Suspense>
+          </NodeInfoProvider>
         </DashboardLayout>
       )} />,
       children: [
