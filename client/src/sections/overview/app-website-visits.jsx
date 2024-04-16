@@ -2,44 +2,64 @@ import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import CardHeader from '@mui/material/CardHeader';
 
-import { fShortenNumber } from 'src/utils/format-number';
+import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 
-export default function AppWidget({ title, total, icon, color = 'primary', sx, ...other }) {
+export default function AppWebsiteVisits({ title, subheader, chart, ...other }) {
+  const { labels, colors, series, options } = chart;
+
+  const chartOptions = useChart({
+    colors,
+    // plotOptions: {
+    //   bar: {
+    //     columnWidth: '50%',
+    //   },
+    // },
+    fill: {
+      type: series.map((i) => i.fill),
+    },
+    labels,
+    xaxis: {
+      type: 'time',
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      y: {
+        formatter: (value) => {
+          if (typeof value !== 'undefined') {
+            return `${value.toFixed(0)} ppm`;
+          }
+          return value;
+        },
+      },
+    },
+    ...options,
+  });
+
   return (
-    <Card
-      component={Stack}
-      spacing={3}
-      direction="row"
-      sx={{
-        px: 3,
-        py: 5,
-        borderRadius: 2,
-        ...sx,
-      }}
-      {...other}
-    >
-      {icon && <Box sx={{ width: 64, height: 252 }}>{icon}</Box>}
+    <Card {...other}>
+      <CardHeader title={title} subheader={subheader} />
 
-      <Stack spacing={0.5}>
-        <Typography variant="h4">{fShortenNumber(total)}</Typography>
-
-        <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
-          {title}
-        </Typography>
-      </Stack>
+      <Box sx={{ p: 3, pb: 1 }}>
+        <Chart
+          dir="ltr"
+          type="line"
+          series={series}
+          options={chartOptions}
+          width="100%"
+          height={120}
+        />
+      </Box>
     </Card>
   );
 }
 
-AppWidget.propTypes = {
-  color: PropTypes.string,
-  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  sx: PropTypes.object,
+AppWebsiteVisits.propTypes = {
+  chart: PropTypes.object,
+  subheader: PropTypes.string,
   title: PropTypes.string,
-  total: PropTypes.number,
 };

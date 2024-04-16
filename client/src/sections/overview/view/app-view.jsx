@@ -8,8 +8,9 @@ import googleMapID from 'src/config/googleMapId';
 
 import GoogleMap from 'src/components/map/googleMap';
 
-import AppWidget from "../app-website-visits";
 import AppWidgetSummary from '../app-widget-summary';
+import AppWebsiteVisits from "../app-website-visits";
+import AppErrorDataSummary from "../app-errorData-summary";
 
 
 // ----------------------------------------------------------------------
@@ -40,7 +41,7 @@ export default function AppView() {
             />
           </Grid>
           <Grid item>
-            <AppWidget
+            <AppErrorDataSummary
               title="Weekly Sales"
               total={714000}
               color="success"
@@ -49,6 +50,37 @@ export default function AppView() {
           </Grid>
         </Grid>
 
+        <Grid xs={12} sm={6} md={3}>
+          <AppWebsiteVisits
+            title="PM2.5"
+            subheader="75.3 ppm : 좋음"
+            chart={{
+              labels: [
+                '01',
+                '02',
+                '03',
+                '04',
+                '05',
+                '06',
+                '07',
+                '08',
+                '09',
+                '10',
+                '11',
+                
+              ],
+              series: [
+                
+                {
+                  name: 'pm2.5',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                },
+              ],
+            }}
+          />
+        </Grid>
         
 
         <Grid xs={12} sm={6} md={3}>
