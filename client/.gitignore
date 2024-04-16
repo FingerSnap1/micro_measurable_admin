@@ -35,5 +35,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-firebaseConfig.js
+# allowedEamils.js, firebaseConfig.js, googleMapId.js
 config/

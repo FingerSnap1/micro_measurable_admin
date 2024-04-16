@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { auth } from '../firebaseConfig'; // Firebase 설정 파일의 경로를 조정해 주세요
+import { auth } from 'src/config/firebaseConfig';
 
 export const useAuthStatus = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
