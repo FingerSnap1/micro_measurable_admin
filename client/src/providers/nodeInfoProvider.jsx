@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useNodeInfo } from 'src/hooks/useNodeInfo';
 
+import Loading from 'src/loading';
 import useNodeInfoStore from 'src/store/nodeInfoStore';
 
 export const NodeInfoProvider = ({ children }) => {
@@ -17,7 +18,7 @@ export const NodeInfoProvider = ({ children }) => {
     }, [isPending, error, data, setNodes]);
 
     return (
-        nodes.length > 0 ? children : <div> Loading... </div>
+        nodes.length > 0 ? children : <div><Loading/></div>
     );
 };
 

@@ -4,6 +4,7 @@ import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/dashboard';
 import { RawDataProvider } from 'src/providers/rawDataProvider';
 import { NodeInfoProvider } from 'src/providers/nodeInfoProvider';
+import { ErrorDataProvider } from 'src/providers/errorDataProvider';
 
 import { NodeView } from 'src/sections/node/view';
 import { NodeAddView } from 'src/sections/node/add';
@@ -31,9 +32,11 @@ export default function Router() {
         <DashboardLayout>
           <NodeInfoProvider>
             <RawDataProvider>
-              <Suspense>
-                <Outlet />
-              </Suspense>
+              <ErrorDataProvider>
+                <Suspense>
+                  <Outlet />
+                </Suspense>
+              </ErrorDataProvider>
             </RawDataProvider>
           </NodeInfoProvider>
         </DashboardLayout>

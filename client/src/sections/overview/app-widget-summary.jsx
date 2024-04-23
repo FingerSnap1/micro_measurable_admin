@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
 
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
-import { fShortenNumber } from 'src/utils/format-number';
 
 // ----------------------------------------------------------------------
 
@@ -23,14 +20,15 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
       }}
       {...other}
     >
-      {icon && <Box sx={{ width: 64, height: 64 }}>{icon}</Box>}
-
       <Stack spacing={0.5}>
-        <Typography variant="h4">{fShortenNumber(total)}</Typography>
-
-        <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
-          {title}
-        </Typography>
+      <Typography sx={{ fontSize: '0.75rem' }}>2024-04-18</Typography>
+      <Stack spacing={0.5} direction="row">
+      <Typography variant="h6"> Active </Typography>
+      
+      <Typography variant="h6"> | 60% </Typography>
+      
+      {icon}
+      </Stack>
       </Stack>
     </Card>
   );

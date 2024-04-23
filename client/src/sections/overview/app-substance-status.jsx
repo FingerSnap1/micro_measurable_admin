@@ -8,16 +8,11 @@ import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 
-export default function AppWebsiteVisits({ title, subheader, chart, ...other }) {
+export default function AppSubstanceState({ title, subheader, chart, ...other }) {
   const { labels, colors, series, options } = chart;
 
   const chartOptions = useChart({
     colors,
-    // plotOptions: {
-    //   bar: {
-    //     columnWidth: '50%',
-    //   },
-    // },
     fill: {
       type: series.map((i) => i.fill),
     },
@@ -58,7 +53,7 @@ export default function AppWebsiteVisits({ title, subheader, chart, ...other }) 
   );
 }
 
-AppWebsiteVisits.propTypes = {
+AppSubstanceState.propTypes = {
   chart: PropTypes.object,
   subheader: PropTypes.string,
   title: PropTypes.string,

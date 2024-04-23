@@ -23,7 +23,7 @@ const GoogleMap = () => {
             elementType: "labels",
             stylers: [{ visibility: "off" }] // 모든 레이블을 숨깁니다.
           },
-          
+
         ]
       }));
     }
@@ -56,7 +56,7 @@ const GoogleMap = () => {
   }, [ref, map, nodes]);
 
   const title = "히딩크"; 
-  const subheader = "이신원 관리자"; 
+  const subheader = "홍길동 관리자"; 
 
   return (
     <Card style={{ height: 500, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>

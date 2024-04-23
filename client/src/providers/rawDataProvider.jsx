@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import { useRawData } from 'src/hooks/useRawData';
 
+import Loading from 'src/loading';
 import useRawDataStore from 'src/store/rawDataStore';
+
 
 export const RawDataProvider = ({ children }) => {
     const { isPending, error, data } = useRawData();
@@ -17,7 +19,7 @@ export const RawDataProvider = ({ children }) => {
     }, [isPending, error, data, setRawData]);
 
     return (
-        rawData.length > 0 ? children : <div> Loading... </div>
+        rawData.length > 0 ? children : <div><Loading/></div>
     );
 };
 
