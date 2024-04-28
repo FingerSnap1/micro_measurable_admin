@@ -30,8 +30,8 @@ export const useManagerInfo = () => {
             console.log(d);
             refetch();
         },
-        onError: () => {
-            
+        onError: (e, variables, context) => {
+            console.log(e);
         },
         onSettled: () => {
         

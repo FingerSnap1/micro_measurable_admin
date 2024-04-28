@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
@@ -16,8 +17,9 @@ import Iconify from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export default function UserTableRow({
+  id,
   selected,
-  name,
+  managerName,
   avatarUrl,
   email,
   nodeAddress,
@@ -34,6 +36,21 @@ export default function UserTableRow({
     setOpen(null);
   };
 
+  const navigate = useNavigate();
+
+  const handleModifyButton = () => {
+    setOpen(null);
+    navigate(
+      'modify', 
+      { state: { 
+        id,
+        managerName,
+        email,
+        nodeAddress,
+      } }
+    );
+  }
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -43,9 +60,9 @@ export default function UserTableRow({
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
+            <Avatar alt={managerName} src={avatarUrl} />
             <Typography variant="subtitle2" noWrap>
-              {name}
+              {managerName}
             </Typography>
           </Stack>
         </TableCell>
@@ -72,7 +89,7 @@ export default function UserTableRow({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleModifyButton}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
         </MenuItem>
@@ -87,9 +104,10 @@ export default function UserTableRow({
 }
 
 UserTableRow.propTypes = {
+  id: PropTypes.any,
   avatarUrl: PropTypes.any,
   handleClick: PropTypes.func,
-  name: PropTypes.any,
+  managerName: PropTypes.any,
   nodeAddress: PropTypes.any,
   location: PropTypes.any,
   email: PropTypes.any,

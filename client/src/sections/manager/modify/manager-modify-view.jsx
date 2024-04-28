@@ -12,27 +12,26 @@ import { alpha, useTheme } from '@mui/material/styles';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { useNodeInfo } from 'src/hooks/useNodeInfo';
+import { useManagerInfo } from 'src/hooks/useManagerInfo';
 
 import { bgGradient } from 'src/theme/css';
 
 // ----------------------------------------------------------------------
 
-export default function NodeModifyView()  {
+export default function ManagerModifyView() {
   const theme = useTheme();
 
-  const { updateNodeMutation } = useNodeInfo();
+  const { updateManagerMutation } = useManagerInfo();
 
   const router = useRouter();
   const routerLocation = useLocation();
 
-  const { id, nodeAddress, location, latitude, longitude } = routerLocation.state || {};
+  const { id, managerName, email, nodeAddress } = routerLocation.state || {};
 
-  const [locationState, setLocationState] = useState(location);
-  const [latitudeState, setLatitudeState] = useState(latitude);
-  const [longitudeState, setLongitudeState] = useState(longitude);
+  const [managerNameState, setManagerNameState] = useState(managerName);
+  const [emailState, setEmailState] = useState(email);
+  const [nodeAddressState, setNodeAddressState] = useState(nodeAddress);
 
-  
   const handleBackButton = () => {
     router.back();
   };
@@ -40,47 +39,44 @@ export default function NodeModifyView()  {
 
   const handleCompleteButton = () => {
 
-    const newNode = {
+    const newManager = {
         id,
-        nodeAddress,
-        location: locationState,
-        latitude: latitudeState,
-        longitude: longitudeState,
+        managerName: managerNameState,
+        email: emailState,
+        nodeAddress: nodeAddressState,
       };
 
-    updateNodeMutation.mutate(newNode);
+    updateManagerMutation.mutate(newManager);
     router.back();
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     switch(name) {
-        case 'location':
-            setLocationState(value);
+        case 'managerName':
+            setManagerNameState(value);
             break;
-        case 'latitude':
-            setLatitudeState(value);
+        case 'email':
+            setEmailState(value);
             break;
-        case 'longitude':
-            setLongitudeState(value);
+        case 'nodeAddress':
+            setNodeAddressState(value);
             break;
         default:
             break;
     }
   };
 
+
   const renderForm = (
     <>
       <Stack spacing={3} sx={{ my: 3 }}>
-        <TextField name="nodeAddress" label="노드 번호" value={nodeAddress} onChange={handleChange}/>
 
-        <TextField name="location" label="노드 명칭" value={locationState} onChange={handleChange}/>
+        <TextField name="managerName" label="관리자 이름" value={managerNameState} onChange={handleChange}/>
 
-        <Stack direction="row" alignItems="center" spacing={2}>
-            {/* <Typography variant="h6">제목</Typography> */}
-            <TextField name="latitude" label="위도" value={latitudeState} onChange={handleChange}/>
-            <TextField name="longitude" label="경도" value={longitudeState} onChange={handleChange}/>
-        </Stack>
+        <TextField name="email" label="이메일" value={emailState} onChange={handleChange} />
+
+        <TextField name="nodeAddress" label="노드 번호" value={nodeAddressState} onChange={handleChange} />
 
       </Stack>
 
@@ -131,7 +127,7 @@ export default function NodeModifyView()  {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">노드 정보 수정</Typography>
+          <Typography variant="h4">관리자 정보 추가</Typography>
 
           <Divider sx={{ my: 3 }}>
             {/* <Typography variant="body2" sx={{ color: 'text.secondary' }}>

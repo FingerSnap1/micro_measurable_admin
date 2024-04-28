@@ -27,9 +27,9 @@ export const updateManager = async (id, nodeAddress,managerName, email) => {
     email,
   };
 
-  console.log("asdf", requestBody);
+  console.log(requestBody);
   const response = await axiosInstance.put(requestURL, requestBody);
-
+  console.log(response);
   return response.data;
 };
 

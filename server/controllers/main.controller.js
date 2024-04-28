@@ -275,7 +275,7 @@ exports.updateManagerInfo = async (req, res) => {
   if (!nodeAddress && !managerName && !email)
     return res.status(400).json({ error: "At least one field is required" });
 
-  const query = querys.updateNodeInfoQuery(id);
+  const query = querys.updateManagerInfoQuery(id);
   let dataObject = {
     type: "updateManagerInfo",
   };
@@ -288,7 +288,7 @@ exports.updateManagerInfo = async (req, res) => {
     const managerInfoRef = db.doc(query);
     await managerInfoRef.update(updateObject);
 
-    const updatedDocumentSnapshot = await nodeInfoRef.get();
+    const updatedDocumentSnapshot = await managerInfoRef.get();
     dataObject["data"] = updatedDocumentSnapshot.data();
   } catch (error) {
     console.log("[updateManagerInfo]", error);

@@ -141,7 +141,7 @@ export default function ManagerView() {
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'name', label: 'Name' },
+                  { id: 'managerName', label: 'Name' },
                   { id: 'email', label: 'Email' },
                   { id: 'nodeAddress', label: 'NodeAddress' },
                   { id: 'location', label: 'Location' },
@@ -154,10 +154,11 @@ export default function ManagerView() {
                   .map((row) => (
                     <UserTableRow
                       key={row.id}
-                      name={row.managerName}
+                      id={row.id}
+                      managerName={row.managerName}
                       email={row.email}
                       nodeAddress={row.nodeAddress}
-                      avatarUrl={`/assets/images/avatars/avatar_${(row.nodeAddress + 1)%8}.jpg`}
+                      avatarUrl={`/assets/images/avatars/avatar_${(row.nodeAddress + 1)%25}.jpg`}
                       location={nodeLocation[row.nodeAddress]}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
