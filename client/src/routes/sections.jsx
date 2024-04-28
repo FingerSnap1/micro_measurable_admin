@@ -11,6 +11,7 @@ import { NodeAddView } from 'src/sections/node/add';
 import { NodeModifyView } from 'src/sections/node/modify';
 
 import PrivateRoute from './privateRoute';
+import { ManagerInfoProvider } from '../providers/managerInfoProvider';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const ManagerPage = lazy(() => import('src/pages/manager'));
@@ -31,13 +32,15 @@ export default function Router() {
       element: <PrivateRoute element= {(
         <DashboardLayout>
           <NodeInfoProvider>
-            <RawDataProvider>
-              <ErrorDataProvider>
-                <Suspense>
-                  <Outlet />
-                </Suspense>
-              </ErrorDataProvider>
-            </RawDataProvider>
+            <ManagerInfoProvider>
+              <RawDataProvider>
+                <ErrorDataProvider>
+                  <Suspense>
+                    <Outlet />
+                  </Suspense>
+                </ErrorDataProvider>
+              </RawDataProvider>
+            </ManagerInfoProvider>
           </NodeInfoProvider>
         </DashboardLayout>
       )} />,

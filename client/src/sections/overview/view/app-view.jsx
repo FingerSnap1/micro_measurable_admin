@@ -11,8 +11,8 @@ import useErrorDataStore from "src/store/errorDataStore";
 
 import GoogleMap from 'src/components/map/googleMap';
 
-import AppTasks from '../app-tasks';
-import AppWidgetSummary from '../app-widget-summary';
+import AppNodeState from '../app-node-state';
+import AppErrorCheck from '../app-error-check';
 import AppSubstanceState from "../app-substance-status";
 import AppWindDirectionStatus from '../app-wind-direction-status';
 
@@ -49,16 +49,13 @@ export default function AppView() {
 
         <Grid container direction="column" spacing={3} xs={12} md={6} lg={4}>
           <Grid item>
-            <AppWidgetSummary
-              title="Weekly Sales"
-              total={714000}
-              color="success"
+            <AppNodeState
               icon={ <Battery60Icon style={{ color: "black", fontSize: 25,}}/>}
             />
           </Grid>
 
            <Grid item>
-          <AppTasks
+          <AppErrorCheck
             title="에러 데이터 체크 리스트"
             list={ errorDataList }
           />
@@ -88,8 +85,8 @@ export default function AppView() {
                 
                 {
                   name: 'pm2.5',
-                  type: 'line',
-                  fill: 'solid',
+                  type: 'area',
+                  fill: 'gradient',
                   data: [20, 20, 20, 20, 25, 25, 27, 27, 29, 35, 36,36],
                 },
               ],
@@ -120,8 +117,8 @@ export default function AppView() {
                 
                 {
                   name: 'pm2.5',
-                  type: 'line',
-                  fill: 'solid',
+                  type: 'area',
+                  fill: 'gradient',
                   data: [250, 265, 263, 288, 302, 303, 312, 318, 305, 321, 300],
                 },
               ],
@@ -151,8 +148,8 @@ export default function AppView() {
                 
                 {
                   name: 'temperature',
-                  type: 'line',
-                  fill: 'solid',
+                  type: 'area',
+                  fill: 'gradient',
                   data: [12, 12, 12, 13, 13, 13, 14, 14, 14, 15, 16],
                 },
               ],
@@ -182,8 +179,8 @@ export default function AppView() {
                 
                 {
                   name: 'pm2.5',
-                  type: 'line',
-                  fill: 'solid',
+                  type: 'area',
+                  fill: 'gradient',
                   data: [75, 75, 70, 70, 70, 70, 64, 65, 65, 60,55],
                 }, 
               ],
@@ -213,8 +210,8 @@ export default function AppView() {
                 
                 {
                   name: 'pm2.5',
-                  type: 'line',
-                  fill: 'solid',
+                  type: 'area',
+                  fill: 'gradient',
                   data: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.11, 0.13, 0.15, 0.13,0.12],
                 },
               ],
@@ -243,8 +240,8 @@ export default function AppView() {
                 
                 {
                   name: 'pm2.5',
-                  type: 'line',
-                  fill: 'solid',
+                  type: 'area',
+                  fill: 'gradient',
                   data: [1,1,2,2,2,2,3,3,3,3,4,4],
                 },
               ],

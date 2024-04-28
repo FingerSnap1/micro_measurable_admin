@@ -25,3 +25,19 @@ exports.updateNodeInfoQuery = (id) => {
 exports.deleteNodeInfoQuery = (id) => {
   return `node-info/${id}`;
 };
+
+exports.getManagerInfoQuery = () => {
+  return `manager-info`;
+};
+
+exports.createManagerInfoQuery = () => {
+  return `manager-info`;
+};
+
+exports.updateManagerInfoQuery = (id) => {
+  return `manager-info/${id}`;
+};
+
+exports.deleteManagerInfoQuery = (id) => {
+  return `manager-info/${id}`;
+};

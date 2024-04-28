@@ -14,7 +14,7 @@ import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function AppTasks({ title, subheader, list, ...other }) {
+export default function AppErrorCheck({ title, subheader, list, ...other }) {
   const [selected, setSelected] = useState(['2']);
 
   const handleClickComplete = (taskId) => {
@@ -41,7 +41,7 @@ export default function AppTasks({ title, subheader, list, ...other }) {
   );
 }
 
-AppTasks.propTypes = {
+AppErrorCheck.propTypes = {
   list: PropTypes.array,
   subheader: PropTypes.string,
   title: PropTypes.string,

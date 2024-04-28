@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import NavigationIcon from '@mui/icons-material/Navigation';
 
-import { primary } from 'src/theme/palette';
+import { secondary } from 'src/theme/palette';
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ export default function AppWindDirectionStatus({ title, subheader, ...other }) {
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ p: 3, pb: 1 }}>
-        <NavigationIcon style={{ color: primary, fontSize: 40, transform: 'rotate(90deg)' }} />
+        <NavigationIcon style={{ color: secondary, fontSize: 40, transform: 'rotate(90deg)' }} />
       </Box>
     </Card>
   );

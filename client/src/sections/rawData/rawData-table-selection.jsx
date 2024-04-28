@@ -5,6 +5,8 @@ import DatePicker from "react-datepicker";
 import { FaCalendarAlt } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { useRawData } from 'src/hooks/useRawData';
+
 import useRawDataStore from 'src/store/rawDataStore';
 import useNodeInfoStore from 'src/store/nodeInfoStore';
 
@@ -87,11 +89,13 @@ CustomInput.propTypes = {
 function RawDataTableSelection(){
 
     const { nodes } = useNodeInfoStore();
-    const { setSelectedDate } = useRawDataStore();
 
-    const nodeLocation = nodes.map((row) => (
-        row.location
-    ));
+    const { setSelectedLocation, setSelectedDate } = useRawDataStore();
+
+    const { mutate: selectedRawDataMutation } = useRawData();
+
+
+    const nodeLocation = ['전체', ...nodes.map((row) => (row.location))];
 
     const [selectedDateState, setSelectedDateState] = useState(new Date());
     const [selectedLocationState, setSelectedLocationState] = useState(nodeLocation[0]);
@@ -106,7 +110,12 @@ function RawDataTableSelection(){
     }
 
     const handleSearchButton = () => {
-        console.log("검색버튼 누름");
+        console.log("검색!");
+        const formattedDate = selectedDateState.toISOString().slice(0, 10);
+        setSelectedDate(formattedDate);
+        setSelectedLocation(selectedLocationState);
+
+        selectedRawDataMutation();
     };
 
     return (

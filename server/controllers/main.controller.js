@@ -244,6 +244,129 @@ exports.getNodeInfo = async (req, res) => {
   return res.status(200).json(dataObject);
 };
 
+exports.deleteManagerInfo = async (req, res) => {
+  const { id } = req.body;
+  if (!id) return res.status(400).json({ error: "id field is required" });
+
+  const query = querys.deleteManagerInfoQuery(id);
+  let dataObject = {
+    type: "deleteManagerInfo",
+  };
+
+  try {
+    const managerInfoRef = db.doc(query);
+    await managerInfoRef.delete();
+    dataObject["result"] = "deleteManagerInfo done";
+  } catch (error) {
+    console.log("[deleteManagerInfo]", error);
+    return res.status(500).json({
+      error: `[deleteManagerInfo] ${error}`,
+    });
+  }
+
+  console.log(`deleteManagerInfo done`);
+  return res.status(200).json(dataObject);
+};
+
+exports.updateManagerInfo = async (req, res) => {
+  // 노드번호	노드위치	위도	경도	베터리잔량
+  const { nodeAddress, managerName, email, id } = req.body;
+  if (!id) return res.status(400).json({ error: "id field is required" });
+  if (!nodeAddress && !managerName && !email)
+    return res.status(400).json({ error: "At least one field is required" });
+
+  const query = querys.updateNodeInfoQuery(id);
+  let dataObject = {
+    type: "updateManagerInfo",
+  };
+  let updateObject = {};
+  if (nodeAddress) updateObject["nodeAddress"] = nodeAddress;
+  if (email) updateObject["email"] = email;
+  if (managerName) updateObject["managerName"] = managerName;
+
+  try {
+    const managerInfoRef = db.doc(query);
+    await managerInfoRef.update(updateObject);
+
+    const updatedDocumentSnapshot = await nodeInfoRef.get();
+    dataObject["data"] = updatedDocumentSnapshot.data();
+  } catch (error) {
+    console.log("[updateManagerInfo]", error);
+    return res.status(500).json({
+      error: `[updateManagerInfo] ${error}`,
+    });
+  }
+
+  console.log(`updateManagerInfo done`);
+  return res.status(200).json(dataObject);
+};
+
+exports.createManagerInfo = async (req, res) => {
+  // 노드번호	노드위치	위도	경도	베터리잔량
+  const { managerName, email, nodeAddress } = req.body;
+  if (!managerName || !email || !nodeAddress)
+    return res.status(400).json({ error: "All fields are required" });
+
+  const query = querys.createManagerInfoQuery();
+  let dataObject = {
+    type: "createManagerInfo",
+    result: "createManagerInfo done",
+    data: {},
+  };
+  let addObject = {
+    managerName: managerName,
+    email: email,
+    nodeAddress: nodeAddress,
+  };
+
+  try {
+    const managerInfoRef = db.collection(query);
+    await managerInfoRef.add(addObject);
+    dataObject["data"] = addObject;
+  } catch (error) {
+    console.log("[createManagerInfo]", error);
+    return res.status(500).json({
+      error: `[createManagerInfo] ${error}`,
+    });
+  }
+
+  console.log(`createManagerInfo done`);
+  return res.status(200).json(dataObject);
+};
+
+exports.getManagerInfo = async (req, res) => {
+  const query = querys.getManagerInfoQuery();
+  let dataObject = {
+    type: "getManagerInfo",
+    data: [],
+  };
+
+  try {
+    const managerInfoRef = db.collection(query);
+    const snapshot = await managerInfoRef.get();
+    if (snapshot.empty) {
+      console.log(`[getManagerInfo] snapshot.empty ${query}`);
+      return res.status(500).send({
+        error: `[getManagerInfo] snapshot.empty ${query}`,
+      });
+    }
+
+    snapshot.forEach((doc) => {
+      let docData = doc.data();
+      docData["id"] = doc.id;
+      dataObject["data"].push(docData);
+    });
+  } catch (error) {
+    console.log("[getManagerInfo]", error);
+    return res.status(500).json({
+      error: `[getManagerInfo] ${error}`,
+    });
+  }
+
+  console.log(`getManagerInfo done`);
+  return res.status(200).json(dataObject);
+};
+
 function isValidDateFormat(dateString) {
   const regex = /^\d{4}-\d{2}-\d{2}$/;
   return regex.test(dateString);

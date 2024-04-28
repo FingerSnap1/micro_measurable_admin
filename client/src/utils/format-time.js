@@ -2,6 +2,11 @@ import { format, getTime, formatDistanceToNow } from 'date-fns';
 
 // ----------------------------------------------------------------------
 
+export function todayDate() {
+  const today = new Date();
+  return format(today, 'yyyy-MM-dd');
+}
+
 export function fDate(date, newFormat) {
   const fm = newFormat || 'dd MMM yyyy';
 

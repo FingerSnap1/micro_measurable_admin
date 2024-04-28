@@ -11,5 +11,10 @@ module.exports = (app) => {
   router.put("/nodeInfo", mainController.updateNodeInfo);
   router.delete("/nodeInfo", mainController.deleteNodeInfo);
 
+  router.get("/managerInfo", mainController.getManagerInfo);
+  router.post("/managerInfo", mainController.createManagerInfo);
+  router.put("/managerInfo", mainController.updateManagerInfo);
+  router.delete("/managerInfo", mainController.deleteManagerInfo);
+
   app.use("/api", router);
 };

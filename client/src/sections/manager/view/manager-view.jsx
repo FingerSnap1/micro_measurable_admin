@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { users } from 'src/_mock/user';
+import useManagerInfoStore from 'src/store/managerInfoStore';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -37,6 +37,8 @@ export default function ManagerView() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const { managers } = useManagerInfoStore();
+
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
     if (id !== '') {
@@ -47,7 +49,7 @@ export default function ManagerView() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.name);
+      const newSelecteds = managers.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -87,7 +89,7 @@ export default function ManagerView() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: users,
+    inputData: managers,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -117,16 +119,15 @@ export default function ManagerView() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={users.length}
+                rowCount={managers.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
+                  { id: 'email', label: 'Email' },
+                  { id: 'nodeAddress', label: 'NodeAddress' },
+                  { id: 'location', label: 'Location' },
                   { id: '' },
                 ]}
               />
@@ -136,12 +137,11 @@ export default function ManagerView() {
                   .map((row) => (
                     <UserTableRow
                       key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      company={row.company}
-                      avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
+                      name={row.managerName}
+                      email={row.email}
+                      nodeAddress={row.nodeAddress}
+                      avatarUrl={`/assets/images/avatars/avatar_${(row.nodeAddress + 1)%8}.jpg`}
+                      location={row.location}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />
@@ -149,7 +149,7 @@ export default function ManagerView() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, users.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, managers.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -161,7 +161,7 @@ export default function ManagerView() {
         <TablePagination
           page={page}
           component="div"
-          count={users.length}
+          count={managers.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

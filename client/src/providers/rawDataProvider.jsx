@@ -9,17 +9,18 @@ import useRawDataStore from 'src/store/rawDataStore';
 
 export const RawDataProvider = ({ children }) => {
     const { isPending, error, data } = useRawData();
-    const { setRawData, rawData } = useRawDataStore();
+    const { todayRawData, setTodayRawData, setSelectedRawData } = useRawDataStore();
 
     useEffect(() => {
         if(!isPending && !error && data){
-            setRawData(data.data);
+            setTodayRawData(data.data);
+            setSelectedRawData(data.data);
             console.log(data.data);
         }
-    }, [isPending, error, data, setRawData]);
+    }, [isPending, error, data, setTodayRawData, setSelectedRawData]);
 
     return (
-        rawData.length > 0 ? children : <div><Loading/></div>
+        todayRawData.length > 0 ? children : <div><Loading/></div>
     );
 };
 

@@ -4,9 +4,11 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import { todayDate } from 'src/utils/format-time';
+
 // ----------------------------------------------------------------------
 
-export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }) {
+export default function AppNodeState({ icon, sx, ...other }) {
   return (
     <Card
       component={Stack}
@@ -14,30 +16,27 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
       direction="row"
       sx={{
         px: 3,
-        py: 5,
+        py: 3,
         borderRadius: 2,
         ...sx,
       }}
       {...other}
     >
       <Stack spacing={0.5}>
-      <Typography sx={{ fontSize: '0.75rem' }}>2024-04-18</Typography>
+      <Typography sx={{ fontSize: '0.8rem' }}>{ todayDate() }</Typography>
       <Stack spacing={0.5} direction="row">
-      <Typography variant="h6"> Active </Typography>
+      <Typography variant="h5"> Active </Typography>
       
-      <Typography variant="h6"> | 60% </Typography>
-      
+      <Typography variant="h5"> | 60% </Typography>
       {icon}
       </Stack>
+      <Typography sx={{ fontSize: '0.8rem' }} >(예상 배터리 교체일: 2024-04-18)</Typography>
       </Stack>
     </Card>
   );
 }
 
-AppWidgetSummary.propTypes = {
-  color: PropTypes.string,
+AppNodeState.propTypes = {
   icon: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   sx: PropTypes.object,
-  title: PropTypes.string,
-  total: PropTypes.number,
 };

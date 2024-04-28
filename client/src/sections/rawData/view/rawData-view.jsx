@@ -1,21 +1,15 @@
 import { useState, useEffect } from 'react';
 
 import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { useRawData } from 'src/hooks/useRawData';
-
 import useRawDataStore from 'src/store/rawDataStore';
-import useNodeInfoStore from 'src/store/nodeInfoStore';
+// import useNodeInfoStore from 'src/store/nodeInfoStore';
 
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
 import { emptyRows } from '../utils';
@@ -29,31 +23,23 @@ import RawDataTableSelection from '../rawData-table-selection';
 
 export default function RawDataView() {
 
-  const { isPending, error, data } = useRawData();
-  const { setRawData,rawData } = useRawDataStore();
-
-  const { nodes } = useNodeInfoStore();
-
-
-  const nodeLocation = nodes.reduce((acc, row) => {
-    acc[row.nodeAddress] = row.location;
-    return acc;
-  }, {});
+  const { selectedRawData, selectedLocation } = useRawDataStore();
   
-  useEffect(() => {
-    if (!isPending && !error && data) {
-      console.log("hello");
-      console.log(data.data);
-      setRawData(data.data);
-    }
-  }, [isPending, error, data,setRawData]);
+  // const { nodes } = useNodeInfoStore();
 
+  // 사용하지 않고, map 함수 사용시, row.nodeInfo.location을 바로 적용하도록 함
+  // const nodeLocation = nodes.reduce((acc, row) => {
+  //   acc[row.nodeAddress] = row.location;
+  //   return acc;
+  // }, {});
+
+  const [tableData, setTableData] = useState([]);
 
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
 
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('date');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -74,15 +60,19 @@ export default function RawDataView() {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
+  useEffect(() => {
+    if(selectedLocation === '전체'){
+      setTableData(selectedRawData);
+    }
+    else{
+      console.log(selectedLocation, selectedRawData);
+      setTableData(selectedRawData.filter(row => row.nodeInfo.location === selectedLocation));
+    }
+
+  }, [selectedLocation, selectedRawData]);
+
   return (
     <Container>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Raw Data</Typography>
-
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New Node
-        </Button>
-      </Stack>
 
       <Card>
         <RawDataTableSelection/>
@@ -104,18 +94,17 @@ export default function RawDataView() {
                   { id: 'humidity', label: '습도' },
                   { id: 'wind_direction', label: '풍향' },
                   { id: 'wind_speed', label: '풍속' },
-                  { id: '' },
                 ]}
               />
               <TableBody>
-                {rawData
+                {tableData
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <RawDataTableRow
-                      key={row.id}
+                      key={row.id}// ❗️수정필요 - unique한 key로 수정 필요
                       date={`${row.date} ${row.timestamp}`}
-                      location={nodeLocation[row.nodeAddress]}
-                      pm25={row.pm25}
+                      location={row.nodeInfo.location}
+                      pm25={row['pm2.5']}
                       pm10={row.pm10}
                       ch2o={row.ch2o}
                       temperature={row.temperature}
@@ -127,7 +116,7 @@ export default function RawDataView() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, rawData.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, selectedRawData.length)}
                 />
 
               </TableBody>
@@ -138,7 +127,7 @@ export default function RawDataView() {
         <TablePagination
           page={page}
           component="div"
-          count={rawData.length}
+          count={selectedRawData.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}
