@@ -8,11 +8,13 @@ export const fetchNodes = async () => {
 };
 
 export const createNode = async (nodeAddress,location,latitude,longitude) => {
+  const lat = +latitude;// double 형태로 변환
+  const long = +longitude;// double 형태로 변환
   const requestBody = {
     nodeAddress,
     location,
-    latitude,
-    longitude,
+    latitude: lat,
+    longitude: long,
   };
 
   const response = await axiosInstance.post(requestURL, requestBody);
@@ -21,12 +23,14 @@ export const createNode = async (nodeAddress,location,latitude,longitude) => {
 };
 
 export const updateNode = async (id, nodeAddress, location, latitude, longitude) => { 
+  const lat = +latitude;// double 형태로 변환
+  const long = +longitude;// double 형태로 변환
   const requestBody = {
     id,
     nodeAddress,
     location,
-    latitude,
-    longitude,
+    latitude: lat,
+    longitude: long,
   };
 
   console.log("asdf", requestBody);
