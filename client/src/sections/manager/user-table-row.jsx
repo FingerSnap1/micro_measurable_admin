@@ -12,7 +12,10 @@ import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
+import { useManagerInfo } from 'src/hooks/useManagerInfo';
+
 import Iconify from 'src/components/iconify';
+
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +29,9 @@ export default function UserTableRow({
   location,
   handleClick,
 }) {
+
+  const { deleteManagerMutation } = useManagerInfo();
+
   const [open, setOpen] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -49,6 +55,12 @@ export default function UserTableRow({
         nodeAddress,
       } }
     );
+  }
+
+  const handleDeleteButton = () => {
+    deleteManagerMutation.mutate(id);
+    console.log(id);
+    setOpen(null);
   }
 
   return (
@@ -94,7 +106,7 @@ export default function UserTableRow({
           Edit
         </MenuItem>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDeleteButton} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
         </MenuItem>
