@@ -8,6 +8,8 @@ import { ErrorDataProvider } from 'src/providers/errorDataProvider';
 
 import { NodeView } from 'src/sections/node/view';
 import { NodeAddView } from 'src/sections/node/add';
+import { ManagerView } from 'src/sections/manager/view';
+import { ManagerAddView } from 'src/sections/manager/add';
 import { NodeModifyView } from 'src/sections/node/modify';
 
 import PrivateRoute from './privateRoute';
@@ -48,7 +50,14 @@ export default function Router() {
         { element: <IndexPage />, index: true},
         { path: 'errorData', element: <ErrorDataPage /> },
         { path: 'rawData', element: <RawDataPage /> },
-        { path: 'manager', element: <ManagerPage /> },
+        { 
+          path: 'manager', 
+          element: <ManagerPage />, 
+          children: [
+            { path: '', element: <ManagerView /> },
+            { path: 'add', element: <ManagerAddView />},
+          ]
+        },
         { 
           path: 'node', 
           element: <NodePage />, 

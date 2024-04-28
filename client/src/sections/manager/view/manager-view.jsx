@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -10,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
+import useNodeInfoStore from 'src/store/nodeInfoStore';
 import useManagerInfoStore from 'src/store/managerInfoStore';
 
 import Iconify from 'src/components/iconify';
@@ -25,6 +27,14 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 // ----------------------------------------------------------------------
 
 export default function ManagerView() {
+
+  const { nodes } = useNodeInfoStore();
+
+  const nodeLocation = nodes.reduce((acc, row) => {
+    acc[row.nodeAddress] = row.location;
+    return acc;
+  }, {});
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -96,13 +106,20 @@ export default function ManagerView() {
 
   const notFound = !dataFiltered.length && !!filterName;
 
+  const navigate = useNavigate();
+  
+  const handleAddManagerButton = () => {
+    console.log("클릭");
+    navigate('add'); // 현재 URL에 `/add`를 추가합니다.
+  };
+
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Managers</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New User
+        <Button onClick={handleAddManagerButton} variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+          New Manager
         </Button>
       </Stack>
 
@@ -141,7 +158,7 @@ export default function ManagerView() {
                       email={row.email}
                       nodeAddress={row.nodeAddress}
                       avatarUrl={`/assets/images/avatars/avatar_${(row.nodeAddress + 1)%8}.jpg`}
-                      location={row.location}
+                      location={nodeLocation[row.nodeAddress]}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 
 import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
+import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
@@ -73,6 +75,9 @@ export default function RawDataView() {
 
   return (
     <Container>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Typography variant="h4">Raw Data</Typography>
+      </Stack>
 
       <Card>
         <RawDataTableSelection/>
