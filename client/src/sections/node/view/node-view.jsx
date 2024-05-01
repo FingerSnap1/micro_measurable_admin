@@ -133,6 +133,7 @@ export default function NodeView() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'location', label: 'Location' ,align: 'left' },
+                  { id: 'nodeAddress', label: 'NodeAddress' },
                   { id: 'battery', label: 'Battery'},
                   { id: 'status', label: 'Status' },
                   { id: 'latitude', label: 'Latitude' },

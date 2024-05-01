@@ -7,6 +7,7 @@ import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
@@ -93,6 +94,10 @@ function TaskItem({ task, checked, onChange }) {
           label={task.name}
           sx={{ flexGrow: 1, m: 0 }}
         />
+        <Typography variant="caption">
+          {task.timestamp}
+        </Typography>
+        
 
         <IconButton color={open ? 'inherit' : 'default'} onClick={handleOpenMenu}>
           <Iconify icon="eva:more-vertical-fill" />

@@ -8,7 +8,7 @@ import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 
-export default function AppSubstanceState({ title, subheader, chart, ...other }) {
+export default function AppSubstanceState({ title, subheader, chart, unit, ...other }) {
   const { labels, colors, series, options } = chart;
 
   const chartOptions = useChart({
@@ -26,7 +26,7 @@ export default function AppSubstanceState({ title, subheader, chart, ...other })
       y: {
         formatter: (value) => {
           if (typeof value !== 'undefined') {
-            return `${value.toFixed(0)} ppm`;
+            return `${value.toFixed(3)} ${unit}`;
           }
           return value;
         },
@@ -57,4 +57,5 @@ AppSubstanceState.propTypes = {
   chart: PropTypes.object,
   subheader: PropTypes.string,
   title: PropTypes.string,
+  unit: PropTypes.string,
 };

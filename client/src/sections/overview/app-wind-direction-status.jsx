@@ -7,23 +7,23 @@ import NavigationIcon from '@mui/icons-material/Navigation';
 
 import { secondary } from 'src/theme/palette';
 
+import { windDirectionValueToAngle } from './utils';
+
 // ----------------------------------------------------------------------
 
-export default function AppWindDirectionStatus({ title, subheader, ...other }) {
-
+export default function AppWindDirectionStatus({ value, ...other }) {
 
   return (
     <Card {...other}>
-      <CardHeader title={title} subheader={subheader} />
+      <CardHeader title="풍향" subheader={value} />
 
       <Box sx={{ p: 3, pb: 1 }}>
-        <NavigationIcon style={{ color: secondary, fontSize: 40, transform: 'rotate(90deg)' }} />
+        <NavigationIcon style={{ color: secondary, fontSize: 40, transform: `rotate(${windDirectionValueToAngle[value]}deg)` }} />
       </Box>
     </Card>
   );
 }
 
 AppWindDirectionStatus.propTypes = {
-  subheader: PropTypes.string,
-  title: PropTypes.string,
+  value: PropTypes.string,
 };

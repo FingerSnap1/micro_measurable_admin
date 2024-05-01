@@ -1,18 +1,22 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 
+import { todayDate } from 'src/utils/format-time';
+
 import useRawDataStore from 'src/store/rawDataStore';
 
 import { fetchRawData } from '../api/rawDataApi';
 
+// ----------------------------------------------------------------
 export const useRawData = () => {
 
-    const { todayDate, selectedDate, setSelectedRawData } = useRawDataStore();
+    const { selectedDate, setSelectedRawData } = useRawDataStore();
+    
 
     const { isPending, error, data } = useQuery({
         queryKey: ['rawData'],
-        queryFn: () => fetchRawData(todayDate),
+        queryFn: () => fetchRawData(todayDate()),
         staleTime: Infinity,
-        refetchInterval: 180000,
+        refetchInterval: 1800000,
     });
 
 

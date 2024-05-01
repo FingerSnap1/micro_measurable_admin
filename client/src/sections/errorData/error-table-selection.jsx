@@ -5,12 +5,12 @@ import DatePicker from "react-datepicker";
 import { FaCalendarAlt } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 
-import Dropdown from 'src/components/dropdown/dropdown';
+import { useErrorData } from 'src/hooks/useErrorData';
 
-import {
-    selectHourOptions,
-    selectLocationOptions
-} from "../../constants/selectOption";
+import useNodeInfoStore from 'src/store/nodeInfoStore'
+import useErrorDataStore from 'src/store/errorDataStore';
+
+import Dropdown from 'src/components/dropdown/dropdown';
 
 
 // ----------------------------------------------------------------------
@@ -89,26 +89,35 @@ CustomInput.propTypes = {
   
 function ErrorTableSelection(){
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [selectedHour, setSelectedHour] = useState(selectHourOptions[0]);
-    const [selectedLocation, setSelectedLocation] = useState(selectLocationOptions[0]);
+    const { nodes } = useNodeInfoStore();
+
+    const { setSelectedLocation, setSelectedDate } = useErrorDataStore();
+
+    const { mutate: selectedErrorDataMutation } = useErrorData();
+
+
+    const nodeLocation = ['전체', ...nodes.map((row) => (row.location))];
+
+    const [selectedDateState, setSelectedDateState] = useState(new Date());
+    const [selectedLocationState, setSelectedLocationState] = useState(nodeLocation[0]);
 
     const handleDateSelect = (date) => {
+        setSelectedDateState(date);
         setSelectedDate(date);
     }
 
-    const handleHourSelect = (hour) => {
-        setSelectedHour(hour);
-    }
-
     const handleLocationSelect = (location) => {
-        setSelectedLocation(location);
+        setSelectedLocationState(location);
     }
 
     const handleSearchButton = () => {
-        console.log("검색버튼 누름");
-    };
+        console.log("검색!");
+        const formattedDate = selectedDateState.toISOString().slice(0, 10);
+        setSelectedDate(formattedDate);
+        setSelectedLocation(selectedLocationState);
 
+        selectedErrorDataMutation();
+    };
 
     return (
         <div>
@@ -117,8 +126,8 @@ function ErrorTableSelection(){
                     <FlexDiv>
                         <FixedP>측정위치</FixedP>
                         <Dropdown
-                            optionData={selectLocationOptions}
-                            selectedValue={selectedLocation}
+                            optionData={nodeLocation}
+                            selectedValue={selectedLocationState}
                             handleSelectedValue={handleLocationSelect}
                         />
                     </FlexDiv>
@@ -126,23 +135,14 @@ function ErrorTableSelection(){
                     <FlexDiv>
                         <FixedP>측정일자</FixedP>
                         <StyledDiv>
-                            <div>{selectedDate.toLocaleDateString()}</div>
+                            <div>{selectedDateState.toLocaleDateString()}</div>
                             <StyledDatePicker
-                                selected={selectedDate}
+                                selected={selectedDateState}
                                 onChange={date => handleDateSelect(date)}
                                 dateFormat="yyyy MMMM dd"
                                 customInput={<CustomInput />}
                             />
                         </StyledDiv>
-                    </FlexDiv>
-
-                    <FlexDiv>
-                        <FixedP>측정시간</FixedP>
-                        <Dropdown
-                            optionData={selectHourOptions}
-                            selectedValue={selectedHour}
-                            handleSelectedValue={handleHourSelect}
-                        />
                     </FlexDiv>
 
                 </ResponsiveFlexDiv>
@@ -155,5 +155,6 @@ function ErrorTableSelection(){
         </div>
     );
 }
+
 
 export default ErrorTableSelection;

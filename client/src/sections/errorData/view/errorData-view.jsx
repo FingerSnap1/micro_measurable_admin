@@ -1,18 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { errorData } from 'src/_mock/errorData';
+import useErrorDataStore from 'src/store/errorDataStore';
 
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
 import { emptyRows} from '../utils';
@@ -24,6 +22,10 @@ import ErrorTableSelection from '../error-table-selection';
 // ----------------------------------------------------------------------
 
 export default function ErrorDataView() {
+
+  const { selectedErrorData, selectedLocation } = useErrorDataStore();
+
+  const [tableData, setTableData] = useState([]);
 
   const [page, setPage] = useState(0);
 
@@ -50,14 +52,22 @@ export default function ErrorDataView() {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
+  useEffect(() => {
+    if(selectedLocation === '전체'){
+      setTableData(selectedErrorData);
+      console.log("전체", selectedErrorData);
+    }
+    else{
+      console.log(selectedLocation, selectedErrorData);
+      setTableData(selectedErrorData.filter(row => row.nodeInfo.location === selectedLocation));
+    }
+
+  }, [selectedLocation, selectedErrorData]);
+
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Error Data</Typography>
-
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New Node
-        </Button>
       </Stack>
 
       <Card>
@@ -70,42 +80,38 @@ export default function ErrorDataView() {
               <ErrorTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={errorData.length}
+                rowCount={tableData.length}
                 onRequestSort={handleSort}
                 headLabel={[
-                  { id: 'sequence', label: '순번'},
-                  { id: 'date', label: '측정일'},
-                  { id: 'timestamp', label: '측정시각' },
-                  { id: 'nodeAddress', label: '노드번호' },
-                  { id: 'location', label: '노드위치' },
-                  { id: 'errerType', label: '에러타입'},
-                  { id: 'errerCause', label: '에러원인'},
-                  { id: 'solution', label: '해결방안' },
                   { id: 'done', label: '처리여부' },
+                  { id: 'date', label: '측정일시'},
+                  { id: 'location', label: '측정위치' },
+                  { id: 'errorMsg', label: '에러메시지'},
+                  { id: 'loraContent', label: '데이터'},
+                  { id: 'errorCause', label: '에러원인'},
+                  { id: 'solution', label: '해결방안' },
                   { id: '' },
                 ]}
               />
               <TableBody>
-                {errorData
+                {tableData
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <ErrorTableRow
                       key={row.id}
-                      sequence={row.sequence}
-                      date={row.date}
-                      timestamp={row.timestamp}
-                      nodeAddress={row.nodeAddress}
-                      location={row.location}
-                      errerType={row.errerType}
-                      errerCause={row.errerCause}
-                      solution={row.solution}
                       done={row.done}
+                      date={`${row.date} ${row.timestamp}`}
+                      location={row.location}
+                      errorMsg={row.errMsg}
+                      loraContent={row.loraContent}
+                      errorCause={row.errCause}
+                      solution={row.solution}
                     />
                   ))}
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, errorData.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, tableData.length)}
                 />
 
               </TableBody>
@@ -116,7 +122,7 @@ export default function ErrorDataView() {
         <TablePagination
           page={page}
           component="div"
-          count={errorData.length}
+          count={tableData.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

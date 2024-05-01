@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from "react";
 
 import Card from '@mui/material/Card';
@@ -5,7 +6,7 @@ import CardHeader from '@mui/material/CardHeader';
 
 import useNodeInfoStore from "src/store/nodeInfoStore";
 
-const GoogleMap = () => {
+const GoogleMap = ({title, subheader}) => {
   const ref = useRef(null);
   const [map, setMap] = useState();
 
@@ -55,9 +56,6 @@ const GoogleMap = () => {
 
   }, [ref, map, nodes]);
 
-  const title = "히딩크"; 
-  const subheader = "홍길동 관리자"; 
-
   return (
     <Card style={{ height: 500, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
       <CardHeader title={title} subheader={subheader}/>
@@ -66,5 +64,11 @@ const GoogleMap = () => {
   );
 
 };
+
+GoogleMap.propTypes = {
+  subheader: PropTypes.string,
+  title: PropTypes.string,
+};
+
 
 export default GoogleMap;

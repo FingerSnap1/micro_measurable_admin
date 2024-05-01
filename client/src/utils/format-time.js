@@ -3,8 +3,11 @@ import { format, getTime, formatDistanceToNow } from 'date-fns';
 // ----------------------------------------------------------------------
 
 export function todayDate() {
-  const today = new Date();
-  return format(today, 'yyyy-MM-dd');
+  const now = new Date();
+  const koreaTime = new Date(now.getTime() + (9 * 60 * 60 * 1000)); // UTC 시간에 9시간을 더합니다.
+  const koreanDateISO = koreaTime.toISOString().slice(0, 10);
+
+  return koreanDateISO;
 }
 
 export function fDate(date, newFormat) {

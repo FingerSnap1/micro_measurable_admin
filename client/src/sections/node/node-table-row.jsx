@@ -65,8 +65,6 @@ export default function NodeTableRow({
     );
   }
 
-
-
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -82,6 +80,8 @@ export default function NodeTableRow({
             </Typography>
           </Stack>
         </TableCell>
+
+        <TableCell align="center">{nodeAddress}</TableCell>
 
         <TableCell align="center">{battery}</TableCell>
 

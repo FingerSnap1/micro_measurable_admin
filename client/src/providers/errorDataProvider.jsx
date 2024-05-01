@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { useErrorData } from 'src/hooks/useErrorData';
 
 import Loading from 'src/loading';
-import useErrorDataStore from 'src/store/errorDataStore';
+import useOverViewStore from 'src/store/overViewStore';
 
 export const ErrorDataProvider = ({ children }) => {
     const { isPending, error, data } = useErrorData();
-    const { setErrorData, errorData } = useErrorDataStore();
+    const { errorData, setErrorData } = useOverViewStore();
 
     useEffect(() => {
         if(!isPending && !error && data){

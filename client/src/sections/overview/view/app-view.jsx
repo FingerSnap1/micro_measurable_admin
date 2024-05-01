@@ -1,3 +1,4 @@
+import { getAuth } from 'firebase/auth';
 import React, { useState, useEffect } from 'react';
 import { Wrapper } from "@googlemaps/react-wrapper";
 
@@ -7,7 +8,9 @@ import Typography from '@mui/material/Typography';
 import Battery60Icon from '@mui/icons-material/Battery60';
 
 import googleMapID from 'src/config/googleMapId';
-import useErrorDataStore from "src/store/errorDataStore";
+import useNodeInfoStore from 'src/store/nodeInfoStore';
+import useOverViewStore from 'src/store/overViewStore';
+import useManagerInfoStore from 'src/store/managerInfoStore';
 
 import GoogleMap from 'src/components/map/googleMap';
 
@@ -17,33 +20,62 @@ import AppSubstanceState from "../app-substance-status";
 import AppWindDirectionStatus from '../app-wind-direction-status';
 
 
+
 // ----------------------------------------------------------------------
 
 export default function AppView() {
-  const { errorData } = useErrorDataStore();
+
+  const auth = getAuth();
+
+  const { rawData, errorData, selectedLocation, setSelectedLocation } = useOverViewStore();
+
+  const { managers } = useManagerInfoStore();
+
+  const { nodes } = useNodeInfoStore();
 
   const [errorDataList, setErrorDataList] = useState([]);
+
+  const [ myName, setMyName ] = useState(''); 
+
+  const [filteredData, setFilteredData] = useState([]);
+
 
   useEffect(() => {
     const filteredAndMappedList = errorData
       .filter(item => !item.done) // Filter out items where done is false
-      .sort((a, b) => a.timestamp.localeCompare(b.timestamp)) // Sort by timestamp
-      .map(item => ({ id: item.id, name: item.errMsg })); // Map to the required format
+      .sort((a, b) => b.timestamp.localeCompare(a.timestamp)) // Sort by timestamp desc
+      .map(item => ({ id: item.id, name: item.errMsg, timestamp: item.timestamp })); // Map to the required format
 
       setErrorDataList(filteredAndMappedList);
-  }, [errorData]);
+
+      // 로그인한 이메일을 기준으로 manager들 중 내 정보를 찾고, 그 에 따라 화면을 커스텀합니다.
+      const myInfo = managers.filter((manager) => auth.currentUser.email === manager.email)[0] || '';
+      setMyName(myInfo.managerName);
+
+      const nodeLocations = nodes.reduce((acc, node) => {
+        acc[node.nodeAddress] = node.location;
+        return acc;
+      },{});
+
+      setSelectedLocation(nodeLocations[myInfo.nodeAddress]);
+
+      setFilteredData(rawData.filter(data => data.nodeInfo.location === '뉴턴홀 뒤'));// ❗️수정필요 - selectedLocation으로 수정 필요
+  }, [errorData,setSelectedLocation, selectedLocation, managers, nodes, auth.currentUser, rawData]);
 
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Hi, Welcome back 👋
+        Hi, Welcome {myName} 👋
       </Typography>
 
       <Grid container spacing={3}>
         
         <Grid xs={12} md={6} lg={8}>
           <Wrapper apiKey={googleMapID}>
-            <GoogleMap options={{ disableDefaultUI: true, zoomControl: false }}/>
+            <GoogleMap 
+              title={selectedLocation}
+              subheader={`${myName} 관리자`}
+              options={{ disableDefaultUI: true, zoomControl: false }}/>
           </Wrapper>
         </Grid>
 
@@ -66,28 +98,16 @@ export default function AppView() {
           <AppSubstanceState
             title="PM2.5"
             subheader="36 ppm : 나쁨"
+            unit="ppm"
             chart={{
-              labels: [
-                '01',
-                '02',
-                '03',
-                '04',
-                '05',
-                '06',
-                '07',
-                '08',
-                '09',
-                '10',
-                '11',
-                
-              ],
+              labels: filteredData.map((row) => row.timestamp.slice(0,2)),
               series: [
                 
                 {
                   name: 'pm2.5',
                   type: 'area',
                   fill: 'gradient',
-                  data: [20, 20, 20, 20, 25, 25, 27, 27, 29, 35, 36,36],
+                  data: filteredData.map((row) => row["pm2.5"]),
                 },
               ],
             }}
@@ -99,27 +119,16 @@ export default function AppView() {
           <AppSubstanceState
             title="PM10"
             subheader="300 ppm : 매우나쁨"
+            unit="ppm"
             chart={{
-              labels: [
-                '01',
-                '02',
-                '03',
-                '04',
-                '05',
-                '06',
-                '07',
-                '08',
-                '09',
-                '10',
-                '11',
-              ],
+              labels: filteredData.map((row) => row.timestamp.slice(0,2)),
               series: [
                 
                 {
-                  name: 'pm2.5',
+                  name: 'pm10',
                   type: 'area',
                   fill: 'gradient',
-                  data: [250, 265, 263, 288, 302, 303, 312, 318, 305, 321, 300],
+                  data: filteredData.map((row) => row.pm10),
                 },
               ],
             }}
@@ -130,27 +139,16 @@ export default function AppView() {
           <AppSubstanceState
             title="온도"
             subheader="16 °C"
+            unit="°C"
             chart={{
-              labels: [
-                '01',
-                '02',
-                '03',
-                '04',
-                '05',
-                '06',
-                '07',
-                '08',
-                '09',
-                '10',
-                '11',
-              ],
+              labels: filteredData.map((row) => row.timestamp.slice(0,2)),
               series: [
                 
                 {
                   name: 'temperature',
                   type: 'area',
                   fill: 'gradient',
-                  data: [12, 12, 12, 13, 13, 13, 14, 14, 14, 15, 16],
+                  data: filteredData.map((row) => row.temperature),
                 },
               ],
             }}
@@ -161,27 +159,16 @@ export default function AppView() {
           <AppSubstanceState
             title="습도"
             subheader="73%"
+            unit="%"
             chart={{
-              labels: [
-                '01',
-                '02',
-                '03',
-                '04',
-                '05',
-                '06',
-                '07',
-                '08',
-                '09',
-                '10',
-                '11',
-              ],
+              labels: filteredData.map((row) => row.timestamp.slice(0,2)),
               series: [
                 
                 {
-                  name: 'pm2.5',
+                  name: 'humidity',
                   type: 'area',
                   fill: 'gradient',
-                  data: [75, 75, 70, 70, 70, 70, 64, 65, 65, 60,55],
+                  data: filteredData.map((row) => row.humidity),
                 }, 
               ],
             }}
@@ -191,28 +178,17 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppSubstanceState
             title="포름알데히드"
-            subheader="0.12 ppm"
+            subheader="0.12"
+            unit="ppm"
             chart={{
-              labels: [
-                '01',
-                '02',
-                '03',
-                '04',
-                '05',
-                '06',
-                '07',
-                '08',
-                '09',
-                '10',
-                '11',
-              ],
+              labels: filteredData.map((row) => row.timestamp.slice(0,2)),
               series: [
                 
                 {
-                  name: 'pm2.5',
+                  name: 'ch2o',
                   type: 'area',
                   fill: 'gradient',
-                  data: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.11, 0.13, 0.15, 0.13,0.12],
+                  data: filteredData.map((row) => row.ch2o),
                 },
               ],
             }}
@@ -222,37 +198,26 @@ export default function AppView() {
           <AppSubstanceState
             title="풍속"
             subheader="4 m/s"
+            unit="m/s"
             chart={{
-              labels: [
-                '01',
-                '02',
-                '03',
-                '04',
-                '05',
-                '06',
-                '07',
-                '08',
-                '09',
-                '10',
-                '11',
-              ],
+              labels: filteredData.map((row) => row.timestamp.slice(0,2)),
               series: [
-                
                 {
-                  name: 'pm2.5',
+                  name: 'wind-speed',
                   type: 'area',
                   fill: 'gradient',
-                  data: [1,1,2,2,2,2,3,3,3,3,4,4],
+                  data: filteredData.map((row) => row["wind-speed"]),
                 },
               ],
             }}
           />
         </Grid>
         <Grid xs={12} sm={6} md={3}>
-          <AppWindDirectionStatus
-            title="풍향"
-            subheader="서풍"
-          />
+          {filteredData.length > 0 && (
+            <AppWindDirectionStatus
+              value={filteredData[filteredData.length - 1]['wind-direction']}
+            />
+          )}
         </Grid>
         
       </Grid>

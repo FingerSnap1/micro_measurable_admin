@@ -17,19 +17,22 @@ const FixedTableCell = styled(TableCell)`
 `;
 
 const WideFixedTableCell = styled(TableCell)`
-    min-width: 150px;
+    min-width: 300px;
+`;
+
+const DoneCell = styled(TableCell)`
+  min-width: 100px;
+  color: ${(props) => props.done ? 'black' : 'red'};
 `;
 
 export default function ErrorTableRow({
-  sequence,
   date,
-  timestamp,
-  nodeAddress,
-  location,
-  errerType,
-  errerCause,
-  solution,
   done,
+  location,
+  errorMsg,
+  loraContent,
+  errorCause,
+  solution,
 }) {
   const [open, setOpen] = useState(null);
 
@@ -45,23 +48,21 @@ export default function ErrorTableRow({
     <>
       <TableRow hover tabIndex={-1}>
 
-        <FixedTableCell align="center">{sequence}</FixedTableCell>
+      <DoneCell align="center" done={done}>{done ? "완료": "미완료"}</DoneCell>
 
-        <FixedTableCell align="center">{date}</FixedTableCell>
-      
-        <FixedTableCell align="center">{timestamp}</FixedTableCell>
-      
-        <FixedTableCell align="center">{nodeAddress}</FixedTableCell>
+        <WideFixedTableCell align="center">{date}</WideFixedTableCell>
 
         <FixedTableCell align="center">{location}</FixedTableCell>
 
-        <WideFixedTableCell align="center">{errerType}</WideFixedTableCell>
+        <WideFixedTableCell align="center">{errorMsg}</WideFixedTableCell>
 
-        <WideFixedTableCell align="center">{errerCause}</WideFixedTableCell>
+        <WideFixedTableCell align="center">{loraContent}</WideFixedTableCell>
+
+        <WideFixedTableCell align="center">{errorCause}</WideFixedTableCell>
 
         <FixedTableCell align="center">{solution}</FixedTableCell>
 
-        <FixedTableCell align="center">{done}</FixedTableCell>
+        
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -96,13 +97,11 @@ export default function ErrorTableRow({
 
 
 ErrorTableRow.propTypes = {
-  sequence: PropTypes.any,
   date: PropTypes.any,
-  timestamp: PropTypes.string,
-  nodeAddress: PropTypes.string,
   location: PropTypes.string,
-  errerType: PropTypes.string,
-  errerCause: PropTypes.string,
+  errorMsg: PropTypes.string,
+  loraContent: PropTypes.string,
+  errorCause: PropTypes.string,
   solution: PropTypes.string,
   done: PropTypes.string,
 };

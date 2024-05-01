@@ -121,7 +121,7 @@ export default function RawDataView() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, selectedRawData.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, tableData.length)}
                 />
 
               </TableBody>
@@ -132,7 +132,7 @@ export default function RawDataView() {
         <TablePagination
           page={page}
           component="div"
-          count={selectedRawData.length}
+          count={tableData.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}
