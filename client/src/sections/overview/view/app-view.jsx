@@ -35,7 +35,7 @@ export default function AppView() {
 
   const [ myName, setMyName ] = useState(''); 
 
-  // const [ managerName, setManagerName ] = useState('');
+  const [ managerName, setManagerName ] = useState('');
 
   const [filteredData, setFilteredData] = useState([]);
 
@@ -59,13 +59,13 @@ export default function AppView() {
         return acc;
       },{});
 
-      // const nodeManager = managers.filter((manager) => nodeLocations[manager.nodeAddress] === selectedLocation)[0] || '';
-      // setManagerName(managerName ?  nodeManager.managerName : myInfo.managerName);
+      const nodeManager = managers.filter((manager) => nodeLocations[manager.nodeAddress] === selectedLocation)[0] || '';
+      setManagerName(managerName ?  nodeManager.managerName : myInfo.managerName);
 
       setSelectedLocation(selectedLocation === '' ? nodeLocations[myInfo.nodeAddress]: selectedLocation);
 
       setFilteredData(rawData.filter(data => data.nodeInfo.location === selectedLocation));// ❗️수정필요 - selectedLocation으로 수정 필요
-  }, [setSelectedLocation, selectedLocation, managers, nodes, auth.currentUser, rawData]);
+  }, [setSelectedLocation, selectedLocation, managers, nodes, auth.currentUser, rawData, managerName]);
 
   return (
     <Container maxWidth="xl">
@@ -79,7 +79,7 @@ export default function AppView() {
           <Wrapper apiKey={googleMapID}>
             <GoogleMap 
               title={selectedLocation}
-              subheader={`${myName} 관리자`}
+              subheader={`${managerName} 관리자`}
               options={{ disableDefaultUI: true, zoomControl: false }}/>
           </Wrapper>
         </Grid>
