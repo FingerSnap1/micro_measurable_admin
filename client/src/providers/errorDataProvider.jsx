@@ -8,17 +8,20 @@ import useOverViewStore from 'src/store/overViewStore';
 
 export const ErrorDataProvider = ({ children }) => {
     const { isPending, error, data } = useErrorData();
-    const { errorData, setErrorData } = useOverViewStore();
+    const { setErrorData } = useOverViewStore();
 
     useEffect(() => {
-        if(!isPending && !error && data){
+        if(data){
             setErrorData(data.data);
             console.log(data.data);
         }
-    }, [isPending, error, data, setErrorData]);
+        else if(error){
+            setErrorData([]);
+        }
+    }, [error, data, setErrorData]);
 
     return (
-        errorData.length > 0 ? children : <div><Loading/></div>
+        !isPending ? children : <div><Loading/></div>
     );
 };
 

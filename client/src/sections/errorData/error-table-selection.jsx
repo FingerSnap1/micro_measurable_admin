@@ -94,6 +94,7 @@ function ErrorTableSelection(){
     const { setSelectedLocation, setSelectedDate } = useErrorDataStore();
 
     const { mutate: selectedErrorDataMutation } = useErrorData();
+    
 
 
     const nodeLocation = ['전체', ...nodes.map((row) => (row.location))];
@@ -111,6 +112,7 @@ function ErrorTableSelection(){
     }
 
     const handleSearchButton = () => {
+
         console.log("검색!");
         const formattedDate = selectedDateState.toISOString().slice(0, 10);
         setSelectedDate(formattedDate);

@@ -19,8 +19,6 @@ import AppErrorCheck from '../app-error-check';
 import AppSubstanceState from "../app-substance-status";
 import AppWindDirectionStatus from '../app-wind-direction-status';
 
-
-
 // ----------------------------------------------------------------------
 
 export default function AppView() {

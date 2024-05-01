@@ -9,17 +9,20 @@ import useManagerInfoStore from '../store/managerInfoStore';
 
 export const ManagerInfoProvider = ({ children }) => {
     const { isPending, error, data } = useManagerInfo();
-    const { setManagers, managers} = useManagerInfoStore();
+    const { setManagers } = useManagerInfoStore();
 
     useEffect(() => {
-        if(!isPending && !error && data){
+        if(data){
             setManagers(data.data);
             console.log(data.data);
         }
-    }, [isPending, error, data, setManagers]);
+        else if(error){
+            setManagers([]);
+        }
+    }, [error, data, setManagers]);
 
     return (
-        managers.length > 0 ? children : <div><Loading/></div>
+        !isPending ? children : <div><Loading/></div>
     );
 };
 

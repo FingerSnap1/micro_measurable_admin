@@ -8,17 +8,20 @@ import useNodeInfoStore from 'src/store/nodeInfoStore';
 
 export const NodeInfoProvider = ({ children }) => {
     const { isPending, error, data } = useNodeInfo();
-    const { setNodes, nodes} = useNodeInfoStore();
+    const { setNodes } = useNodeInfoStore();
 
     useEffect(() => {
-        if(!isPending && !error && data){
+        if(data){
             setNodes(data.data);
             console.log(data.data);
         }
-    }, [isPending, error, data, setNodes]);
+        else if(error){
+            setNodes([]);
+        }
+    }, [error, data, setNodes]);
 
     return (
-        nodes.length > 0 ? children : <div><Loading/></div>
+        !isPending > 0 ? children : <div><Loading/></div>
     );
 };
 

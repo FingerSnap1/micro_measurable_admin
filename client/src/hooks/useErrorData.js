@@ -12,8 +12,10 @@ export const useErrorData = () => {
 
     const { isPending, error, data } = useQuery({
         queryKey: ['errorData'],
-        queryFn: () => fetchErrorData('2024-04-12'),// ❗️수정 필요 - 당일 날짜로 todayDate()
+        queryFn: () => fetchErrorData('2024-05-01'),// ❗️수정 필요 todayDate()
         staleTime: Infinity,
+        refetchInterval: 1800000,
+        retry: 0,
     });
 
     const selectedErrorDataMutation = useMutation({
@@ -24,6 +26,7 @@ export const useErrorData = () => {
         onError: (e, variables, context) => {
             setSelectedErrorData([]);
         },
+        retry: 0,
     });
 
 

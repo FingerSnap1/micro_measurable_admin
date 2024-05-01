@@ -15,7 +15,7 @@ const GoogleMap = ({title, subheader}) => {
   const { setSelectedLocation, selectedLocation } = useOverViewStore();
 
   useEffect(() => {
-
+    
     if (ref.current && !map) {
       setMap(new window.google.maps.Map(ref.current, {
         center: { lat: 36.1032734, lng: 129.3893488 },

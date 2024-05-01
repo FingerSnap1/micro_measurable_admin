@@ -53,14 +53,15 @@ export default function ErrorDataView() {
   };
 
   useEffect(() => {
-    if(selectedLocation === '전체'){
-      setTableData(selectedErrorData);
-      console.log("전체", selectedErrorData);
-    }
-    else{
-      console.log(selectedLocation, selectedErrorData);
-      setTableData(selectedErrorData.filter(row => row.nodeInfo.location === selectedLocation));
-    }
+    // if(selectedLocation === '전체'){
+    //   setTableData(selectedErrorData);
+    //   console.log("전체", selectedErrorData);
+    // }
+    // else{
+    //   console.log(selectedLocation, selectedErrorData);
+    //   setTableData(selectedErrorData.filter(row => row.nodeInfo.location === selectedLocation));
+    // }
+    setTableData(selectedErrorData);
 
   }, [selectedLocation, selectedErrorData]);
 

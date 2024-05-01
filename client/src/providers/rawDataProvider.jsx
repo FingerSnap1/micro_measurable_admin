@@ -9,17 +9,20 @@ import useOverViewStore from 'src/store/overViewStore';
 
 export const RawDataProvider = ({ children }) => {
     const { isPending, error, data } = useRawData();
-    const { rawData, setRawData } = useOverViewStore();
+    const { setRawData } = useOverViewStore();
 
     useEffect(() => {
-        if(!isPending && !error && data){
+        if(data){
             setRawData(data.data);
             console.log(data.data);
         }
-    }, [isPending, error, data, setRawData]);
+        else if(error){
+            setRawData([]);
+        }
+    }, [error, data, setRawData]);
 
     return (
-        rawData.length > 0 ? children : <div><Loading/></div>
+        !isPending ? children : <div><Loading/></div>
     );
 };
 

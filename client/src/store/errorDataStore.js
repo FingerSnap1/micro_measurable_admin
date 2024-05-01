@@ -5,7 +5,7 @@ const useErrorDataStore = create((set) => ({
     selectedLocation: '전체',
     setSelectedLocation: (data) => set({ selectedLocation: data }),
     
-    selectedDate: '2024-04-12',
+    selectedDate: new Date().toISOString().slice(0, 10),
     setSelectedDate: (date) => set({ selectedDate: date}),
 
     selectedErrorData: [],
