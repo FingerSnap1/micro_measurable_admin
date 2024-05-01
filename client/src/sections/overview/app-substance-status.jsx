@@ -8,8 +8,10 @@ import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 
-export default function AppSubstanceState({ title, subheader, chart, unit, ...other }) {
+export default function AppSubstanceState({ title, chart, unit, ...other }) {
   const { labels, colors, series, options } = chart;
+
+  const subheader = (series[0].data[series[0].data.length -1] ?? '') + unit;
 
   const chartOptions = useChart({
     colors,
@@ -55,7 +57,6 @@ export default function AppSubstanceState({ title, subheader, chart, unit, ...ot
 
 AppSubstanceState.propTypes = {
   chart: PropTypes.object,
-  subheader: PropTypes.string,
   title: PropTypes.string,
   unit: PropTypes.string,
 };

@@ -102,7 +102,6 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppSubstanceState
             title="PM2.5"
-            subheader="36 ppm : 나쁨"
             unit="ppm"
             chart={{
               labels: filteredData.map((row) => row.timestamp.slice(0,2)),
@@ -123,7 +122,6 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppSubstanceState
             title="PM10"
-            subheader="300 ppm : 매우나쁨"
             unit="ppm"
             chart={{
               labels: filteredData.map((row) => row.timestamp.slice(0,2)),
@@ -143,7 +141,6 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppSubstanceState
             title="온도"
-            subheader="16 °C"
             unit="°C"
             chart={{
               labels: filteredData.map((row) => row.timestamp.slice(0,2)),
@@ -163,7 +160,6 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppSubstanceState
             title="습도"
-            subheader="73%"
             unit="%"
             chart={{
               labels: filteredData.map((row) => row.timestamp.slice(0,2)),
@@ -183,7 +179,6 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppSubstanceState
             title="포름알데히드"
-            subheader="0.12"
             unit="ppm"
             chart={{
               labels: filteredData.map((row) => row.timestamp.slice(0,2)),
@@ -202,7 +197,6 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppSubstanceState
             title="풍속"
-            subheader="4 m/s"
             unit="m/s"
             chart={{
               labels: filteredData.map((row) => row.timestamp.slice(0,2)),
