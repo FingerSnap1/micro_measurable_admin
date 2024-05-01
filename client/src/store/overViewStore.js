@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 const useOverViewStore = create((set) => ({
     selectedLocation: '',
-    setSelectedLocation: (data) => set({ selectedLocation:data }),
+    setSelectedLocation: (data) => set({ selectedLocation: data }),
 
     rawData: [],
     setRawData: (data) => set({

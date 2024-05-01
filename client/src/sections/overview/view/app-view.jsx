@@ -37,17 +37,21 @@ export default function AppView() {
 
   const [ myName, setMyName ] = useState(''); 
 
+  // const [ managerName, setManagerName ] = useState('');
+
   const [filteredData, setFilteredData] = useState([]);
 
-
-  useEffect(() => {
+  useEffect(() => { // 에러 데이터
     const filteredAndMappedList = errorData
       .filter(item => !item.done) // Filter out items where done is false
       .sort((a, b) => b.timestamp.localeCompare(a.timestamp)) // Sort by timestamp desc
       .map(item => ({ id: item.id, name: item.errMsg, timestamp: item.timestamp })); // Map to the required format
 
       setErrorDataList(filteredAndMappedList);
+  }, [errorData]);
 
+
+  useEffect(() => {
       // 로그인한 이메일을 기준으로 manager들 중 내 정보를 찾고, 그 에 따라 화면을 커스텀합니다.
       const myInfo = managers.filter((manager) => auth.currentUser.email === manager.email)[0] || '';
       setMyName(myInfo.managerName);
@@ -57,10 +61,13 @@ export default function AppView() {
         return acc;
       },{});
 
-      setSelectedLocation(nodeLocations[myInfo.nodeAddress]);
+      // const nodeManager = managers.filter((manager) => nodeLocations[manager.nodeAddress] === selectedLocation)[0] || '';
+      // setManagerName(managerName ?  nodeManager.managerName : myInfo.managerName);
 
-      setFilteredData(rawData.filter(data => data.nodeInfo.location === '뉴턴홀 뒤'));// ❗️수정필요 - selectedLocation으로 수정 필요
-  }, [errorData,setSelectedLocation, selectedLocation, managers, nodes, auth.currentUser, rawData]);
+      setSelectedLocation(selectedLocation === '' ? nodeLocations[myInfo.nodeAddress]: selectedLocation);
+
+      setFilteredData(rawData.filter(data => data.nodeInfo.location === selectedLocation));// ❗️수정필요 - selectedLocation으로 수정 필요
+  }, [setSelectedLocation, selectedLocation, managers, nodes, auth.currentUser, rawData]);
 
   return (
     <Container maxWidth="xl">

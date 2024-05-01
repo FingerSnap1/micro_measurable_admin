@@ -5,12 +5,14 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 
 import useNodeInfoStore from "src/store/nodeInfoStore";
+import useOverViewStore from 'src/store/overViewStore';
 
 const GoogleMap = ({title, subheader}) => {
   const ref = useRef(null);
   const [map, setMap] = useState();
 
   const { nodes } = useNodeInfoStore();
+  const { setSelectedLocation, selectedLocation } = useOverViewStore();
 
   useEffect(() => {
 
@@ -49,12 +51,13 @@ const GoogleMap = ({title, subheader}) => {
 
       marker.addListener("click", () => {
         console.log(node.location);
+        setSelectedLocation(node.location);
       });
 
     });
 
 
-  }, [ref, map, nodes]);
+  }, [ref, map, nodes, setSelectedLocation, selectedLocation]);
 
   return (
     <Card style={{ height: 500, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
