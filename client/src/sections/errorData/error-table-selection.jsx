@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import { FaCalendarAlt } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useErrorData } from 'src/hooks/useErrorData';
+import { useErrorDataMutation } from 'src/hooks/useErrorData';
 
 import useNodeInfoStore from 'src/store/nodeInfoStore'
 import useErrorDataStore from 'src/store/errorDataStore';
@@ -93,7 +93,7 @@ function ErrorTableSelection(){
 
     const { setSelectedLocation, setSelectedDate } = useErrorDataStore();
 
-    const { mutate: selectedErrorDataMutation } = useErrorData();
+    const { mutate: selectedErrorDataMutation } = useErrorDataMutation();
     
 
 

@@ -1,22 +1,28 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 
-// import { todayDate } from 'src/utils/format-time';
+import { todayDate } from 'src/utils/format-time';
 
 import { fetchErrorData } from 'src/api/errorDataApi';
 import useErrorDataStore from 'src/store/errorDataStore';
 
 // ----------------------------------------------------------------
-export const useErrorData = () => {
-
-    const { selectedDate, setSelectedErrorData } = useErrorDataStore();
+export const useErrorDataQuery = () => {
 
     const { isPending, error, data } = useQuery({
         queryKey: ['errorData'],
-        queryFn: () => fetchErrorData('2024-05-01'),// ❗️수정 필요 todayDate()
+        queryFn: () => fetchErrorData(todayDate()),
         staleTime: Infinity,
         refetchInterval: 1800000,
         retry: 0,
     });
+
+    return { isPending, error, data};
+};
+
+
+export const useErrorDataMutation = () => {
+
+    const { selectedDate, setSelectedErrorData } = useErrorDataStore();
 
     const selectedErrorDataMutation = useMutation({
         mutationFn: () => fetchErrorData(selectedDate),
@@ -30,5 +36,5 @@ export const useErrorData = () => {
     });
 
 
-    return { isPending, error, data, mutate: selectedErrorDataMutation.mutate };
+    return { mutate: selectedErrorDataMutation.mutate };
 };
