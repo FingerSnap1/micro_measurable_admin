@@ -23,7 +23,7 @@ function PrivateRoute({ element }) {
 }
 
 PrivateRoute.propTypes = {
-  element: PropTypes.element.isRequired, // element prop은 React element이며, 필수임을 명시
+  element: PropTypes.element.isRequired,
 };
 
 export default PrivateRoute;

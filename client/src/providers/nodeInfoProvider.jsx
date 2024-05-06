@@ -21,10 +21,10 @@ export const NodeInfoProvider = ({ children }) => {
     }, [error, data, setNodes]);
 
     return (
-        !isPending > 0 ? children : <div><Loading/></div>
+        !isPending ? children : <div><Loading/></div>
     );
 };
 
 NodeInfoProvider.propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.any,
 };

@@ -85,13 +85,13 @@ export default function AppView() {
         </Grid>
 
         <Grid container direction="column" spacing={3} xs={12} md={6} lg={4}>
-          <Grid item>
+          <Grid>
             <AppNodeState
               icon={ <Battery60Icon style={{ color: "black", fontSize: 25,}}/>}
             />
           </Grid>
 
-           <Grid item>
+           <Grid>
           <AppErrorCheck
             title="에러 데이터 체크 리스트"
             list={ errorDataList }

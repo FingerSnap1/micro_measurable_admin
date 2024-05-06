@@ -27,5 +27,5 @@ export const RawDataProvider = ({ children }) => {
 };
 
 RawDataProvider.propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.any,
 };

@@ -25,7 +25,12 @@ exports.getRawDataInDay = async (req, res) => {
         error: `[getRawDataInDay] snapshot.empty ${query}`,
       });
     }
-    snapshot.forEach((doc) => dataObject["data"].push(doc.data()));
+    // snapshot.forEach((doc) => dataObject["data"].push(doc.data()));
+    snapshot.forEach((doc) => {
+      let docData = doc.data();
+      docData["id"] = doc.id;
+      dataObject["data"].push(docData);
+    });
   } catch (error) {
     console.log("[getRawDataInDay]", error);
     return res.status(500).json({

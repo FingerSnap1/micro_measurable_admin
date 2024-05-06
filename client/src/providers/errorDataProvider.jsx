@@ -26,5 +26,5 @@ export const ErrorDataProvider = ({ children }) => {
 };
 
 ErrorDataProvider.propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.any,
 };

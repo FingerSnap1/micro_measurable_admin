@@ -27,5 +27,5 @@ export const ManagerInfoProvider = ({ children }) => {
 };
 
 ManagerInfoProvider.propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.any,
 };

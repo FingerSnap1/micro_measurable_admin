@@ -77,7 +77,7 @@ const SearchButton = styled.button`
 `;
 
 
-const CustomInput = React.forwardRef(({ onClick }, ref) => (
+const CustomInput = React.forwardRef(({ onClick = () => {} }, ref) => (
     <button type="button" onClick={onClick} ref={ref} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
       <FaCalendarAlt style={{ color: "#212A36", fontSize: "1em" }} />
     </button>
@@ -142,7 +142,7 @@ function ErrorTableSelection(){
                                 selected={selectedDateState}
                                 onChange={date => handleDateSelect(date)}
                                 dateFormat="yyyy MMMM dd"
-                                customInput={<CustomInput />}
+                                customInput={<CustomInput onClick={() => console.log("DatePicker clicked")} />}
                             />
                         </StyledDiv>
                     </FlexDiv>
