@@ -7,7 +7,7 @@ export default function NodePage() {
   return (
     <>
       <Helmet>
-        <title> Node | Minimal UI </title>
+        <title> Node | Micro measurable </title>
       </Helmet>
 
       <Outlet />

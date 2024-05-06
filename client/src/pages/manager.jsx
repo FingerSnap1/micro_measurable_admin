@@ -8,7 +8,7 @@ export default function ManagerPage() {
   return (
     <>
       <Helmet>
-        <title> Manager | Minimal UI </title>
+        <title> Manager | Micro measurable </title>
       </Helmet>
 
       <Outlet />

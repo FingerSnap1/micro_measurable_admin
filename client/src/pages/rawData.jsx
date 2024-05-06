@@ -8,7 +8,7 @@ export default function RawDataPage() {
   return (
     <>
       <Helmet>
-        <title> Raw Data | Minimal UI </title>
+        <title> Raw Data | Micro measurable </title>
       </Helmet>
 
       <RawDataView />

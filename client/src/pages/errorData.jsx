@@ -8,7 +8,7 @@ export default function ErrorDataPage() {
   return (
     <>
       <Helmet>
-        <title> Error Data | Minimal UI </title>
+        <title> Error Data | Micro measurable </title>
       </Helmet>
 
       <ErrorDataView />
