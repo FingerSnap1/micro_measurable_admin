@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
@@ -26,9 +27,9 @@ const DoneCell = styled(TableCell)`
 `;
 
 export default function ErrorTableRow({
+  id,
   date,
   done,
-  location,
   errorMsg,
   loraContent,
   errorCause,
@@ -44,6 +45,25 @@ export default function ErrorTableRow({
     setOpen(null);
   };
 
+  const navigate = useNavigate();
+
+  const handleModifyButton = () => {
+    setOpen(null);
+    navigate(
+      'modify', 
+      { state: { 
+        id,
+        date,
+        done,
+        errorMsg,
+        loraContent,
+        errorCause,
+        solution,
+      } }
+    );
+  }
+
+
   return (
     <>
       <TableRow hover tabIndex={-1}>
@@ -51,8 +71,6 @@ export default function ErrorTableRow({
       <DoneCell align="center" done={done}>{done ? "완료": "미완료"}</DoneCell>
 
         <WideFixedTableCell align="center">{date}</WideFixedTableCell>
-
-        <FixedTableCell align="center">{location}</FixedTableCell>
 
         <WideFixedTableCell align="center">{errorMsg}</WideFixedTableCell>
 
@@ -81,15 +99,15 @@ export default function ErrorTableRow({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleModifyButton}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
         </MenuItem>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+        {/* <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
-        </MenuItem>
+        </MenuItem> */}
       </Popover>
     </>
   );
@@ -97,8 +115,8 @@ export default function ErrorTableRow({
 
 
 ErrorTableRow.propTypes = {
+  id: PropTypes.any,
   date: PropTypes.any,
-  location: PropTypes.any,
   errorMsg: PropTypes.any,
   loraContent: PropTypes.any,
   errorCause: PropTypes.any,

@@ -11,7 +11,9 @@ import { NodeAddView } from 'src/sections/node/add';
 import { ManagerView } from 'src/sections/manager/view';
 import { ManagerAddView } from 'src/sections/manager/add';
 import { NodeModifyView } from 'src/sections/node/modify';
+import { ErrorDataView } from 'src/sections/errorData/view';
 import { ManagerModifyView } from 'src/sections/manager/modify';
+import { ErrorDataModifyView } from 'src/sections/errorData/modify';
 
 import PrivateRoute from './privateRoute';
 import { ManagerInfoProvider } from '../providers/managerInfoProvider';
@@ -49,8 +51,15 @@ export default function Router() {
       )} />,
       children: [
         { element: <IndexPage />, index: true},
-        { path: 'errorData', element: <ErrorDataPage /> },
         { path: 'rawData', element: <RawDataPage /> },
+        { 
+          path: 'errorData', 
+          element: <ErrorDataPage />,
+          children: [
+            { path: '', element: <ErrorDataView /> },
+            { path: 'modify', element: <ErrorDataModifyView /> },
+          ]
+        },
         { 
           path: 'manager', 
           element: <ManagerPage />, 

@@ -86,7 +86,6 @@ export default function ErrorDataView() {
                 headLabel={[
                   { id: 'done', label: '처리여부' },
                   { id: 'date', label: '측정일시'},
-                  { id: 'location', label: '측정위치' },
                   { id: 'errorMsg', label: '에러메시지'},
                   { id: 'loraContent', label: '데이터'},
                   { id: 'errorCause', label: '에러원인'},
@@ -102,7 +101,6 @@ export default function ErrorDataView() {
                       key={row.id}
                       done={row.done ? 'true': undefined }
                       date={`${row.date} ${row.timestamp}`}
-                      location={row.location}
                       errorMsg={row.errMsg}
                       loraContent={row.loraContent}
                       errorCause={row.errCause}

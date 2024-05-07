@@ -1,6 +1,5 @@
+import { Outlet } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-
-import { ErrorDataView } from 'src/sections/errorData/view';
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +10,7 @@ export default function ErrorDataPage() {
         <title> Error Data | Micro measurable </title>
       </Helmet>
 
-      <ErrorDataView />
+      <Outlet />
     </>
   );
 }
