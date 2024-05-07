@@ -98,10 +98,10 @@ export default function ErrorTableRow({
 
 ErrorTableRow.propTypes = {
   date: PropTypes.any,
-  location: PropTypes.string,
-  errorMsg: PropTypes.string,
-  loraContent: PropTypes.string,
-  errorCause: PropTypes.string,
-  solution: PropTypes.string,
-  done: PropTypes.string,
+  location: PropTypes.any,
+  errorMsg: PropTypes.any,
+  loraContent: PropTypes.any,
+  errorCause: PropTypes.any,
+  solution: PropTypes.any,
+  done: PropTypes.any,
 };

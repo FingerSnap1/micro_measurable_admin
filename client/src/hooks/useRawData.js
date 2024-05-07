@@ -7,10 +7,7 @@ import useRawDataStore from 'src/store/rawDataStore';
 import { fetchRawData } from '../api/rawDataApi';
 
 // ----------------------------------------------------------------
-export const useRawData = () => {
-
-    const { selectedDate, setSelectedRawData } = useRawDataStore();
-    
+export const useRawDataQuery = () => {
 
     const { isPending, error, data } = useQuery({
         queryKey: ['rawData'],
@@ -19,6 +16,12 @@ export const useRawData = () => {
         refetchInterval: 1800000,
     });
 
+    return { isPending, error, data };
+};
+
+export const useRawDataMutation = () => {
+
+    const { selectedDate, setSelectedRawData } = useRawDataStore();
 
     const selectedRawDataMutation = useMutation({
         mutationFn: () => fetchRawData(selectedDate),
@@ -30,5 +33,5 @@ export const useRawData = () => {
         },
     })
 
-    return { isPending, error, data, mutate: selectedRawDataMutation.mutate };
+    return { mutate: selectedRawDataMutation.mutate };
 };

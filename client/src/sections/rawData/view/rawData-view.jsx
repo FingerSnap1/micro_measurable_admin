@@ -46,6 +46,7 @@ export default function RawDataView() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleSort = (event, id) => {
+    console.log("raw 클릭");
     const isAsc = orderBy === id && order === 'asc';
     if (id !== '') {
       setOrder(isAsc ? 'desc' : 'asc');
@@ -72,6 +73,7 @@ export default function RawDataView() {
     }
 
   }, [selectedLocation, selectedRawData]);
+  
 
   return (
     <Container>
@@ -106,7 +108,7 @@ export default function RawDataView() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <RawDataTableRow
-                      key={row.id}// ❗️수정필요 - unique한 key로 수정 필요
+                      key={row.id}
                       date={`${row.date} ${row.timestamp}`}
                       location={row.nodeInfo.location}
                       pm25={row['pm2.5']}
@@ -135,7 +137,7 @@ export default function RawDataView() {
           count={tableData.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25, 50]}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>

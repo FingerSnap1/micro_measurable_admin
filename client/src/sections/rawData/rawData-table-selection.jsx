@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import { FaCalendarAlt } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useRawData } from 'src/hooks/useRawData';
+import { useRawDataMutation } from 'src/hooks/useRawData';
 
 import useRawDataStore from 'src/store/rawDataStore';
 import useNodeInfoStore from 'src/store/nodeInfoStore';
@@ -92,7 +92,7 @@ function RawDataTableSelection(){
 
     const { setSelectedLocation, setSelectedDate } = useRawDataStore();
 
-    const { mutate: selectedRawDataMutation } = useRawData();
+    const { mutate: selectedRawDataMutation } = useRawDataMutation();
 
 
     const nodeLocation = ['전체', ...nodes.map((row) => (row.location))];

@@ -100,13 +100,13 @@ export default function ErrorDataView() {
                   .map((row) => (
                     <ErrorTableRow
                       key={row.id}
-                      done={row.done ?? ''}
-                      date={`${row.date} ${row.timestamp}` ?? ''}
-                      location={row.location ?? ''}
-                      errorMsg={row.errMsg ?? ''}
-                      loraContent={row.loraContent ?? ''}
-                      errorCause={row.errCause ?? ''}
-                      solution={row.solution ?? ''}
+                      done={row.done ? 'true': undefined }
+                      date={`${row.date} ${row.timestamp}`}
+                      location={row.location}
+                      errorMsg={row.errMsg}
+                      loraContent={row.loraContent}
+                      errorCause={row.errCause}
+                      solution={row.solution}
                     />
                   ))}
 
