@@ -149,9 +149,9 @@ exports.deleteNodeInfo = async (req, res) => {
 
 exports.updateNodeInfo = async (req, res) => {
   // 노드번호	노드위치	위도	경도	베터리잔량
-  const { nodeAddress, location, latitude, longitude, id } = req.body;
+  const { nodeAddress, location, latitude, longitude, id, battery } = req.body;
   if (!id) return res.status(400).json({ error: "id field is required" });
-  if (!nodeAddress && !location && !latitude && !longitude)
+  if (!nodeAddress && !location && !latitude && !longitude && !battery)
     return res.status(400).json({ error: "At least one field is required" });
 
   const query = querys.updateNodeInfoQuery(id);
@@ -163,6 +163,7 @@ exports.updateNodeInfo = async (req, res) => {
   if (location) updateObject["location"] = location;
   if (latitude) updateObject["latitude"] = latitude;
   if (longitude) updateObject["longitude"] = longitude;
+  if (battery) updateObject["battery"] = battery;
 
   try {
     const nodeInfoRef = db.doc(query);
@@ -193,12 +194,17 @@ exports.createNodeInfo = async (req, res) => {
     result: "createNodeInfo done",
     data: {},
   };
+
+  const now = new Date();
+  const koreaTime = new Date(now.getTime() + (9 * 60 * 60 * 1000)); // UTC 시간에 9시간을 더합니다.
+  const koreanDateISO = koreaTime.toISOString().slice(0, 10);
+
   let addObject = {
     nodeAddress: nodeAddress,
     location: location,
     latitude: latitude,
     longitude: longitude,
-    battery: "?%",
+    battery: koreanDateISO,
   };
 
   try {

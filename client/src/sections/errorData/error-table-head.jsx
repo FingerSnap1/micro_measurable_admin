@@ -27,7 +27,6 @@ export default function ErrorTableHead({
     <TableHead>
       <TableRow>
         
-
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}

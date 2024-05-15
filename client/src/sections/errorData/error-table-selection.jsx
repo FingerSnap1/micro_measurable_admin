@@ -93,7 +93,7 @@ function ErrorTableSelection(){
 
     const { setSelectedLocation, setSelectedDate } = useErrorDataStore();
 
-    const { mutate: selectedErrorDataMutation } = useErrorDataMutation();
+    const { selectedErrorDataMutation } = useErrorDataMutation();
     
 
 
@@ -118,7 +118,7 @@ function ErrorTableSelection(){
         setSelectedDate(formattedDate);
         setSelectedLocation(selectedLocationState);
 
-        selectedErrorDataMutation();
+        selectedErrorDataMutation.mutate();
     };
 
     return (

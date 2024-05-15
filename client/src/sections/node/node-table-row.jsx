@@ -17,6 +17,8 @@ import { useNodeInfo } from 'src/hooks/useNodeInfo';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
+import { daysDiff } from './utils';
+
 // ----------------------------------------------------------------------
 
 export default function NodeTableRow({
@@ -31,7 +33,7 @@ export default function NodeTableRow({
   handleClick,
 }) {
 
-  const { deleteNodeMutation } = useNodeInfo();
+  const { deleteNodeMutation, updateNodeMutation } = useNodeInfo();
 
   const [open, setOpen] = useState(null);
 
@@ -49,6 +51,27 @@ export default function NodeTableRow({
     setOpen(null);
   }
 
+  const handleResetBattryButton = () => {
+
+    const now = new Date();
+    const koreaTime = new Date(now.getTime() + (9 * 60 * 60 * 1000)); // UTC 시간에 9시간을 더합니다.
+    const koreanDateISO = koreaTime.toISOString().slice(0, 10);
+
+    console.log(koreanDateISO)
+    const newNode = {
+      id,
+      nodeAddress,
+      location,
+      latitude,
+      longitude,
+      battery: koreanDateISO
+    };
+    updateNodeMutation.mutate(newNode);
+
+    console.log(id);
+    setOpen(null);
+  }
+
   const navigate = useNavigate();
 
   const handleModifyButton = () => {
@@ -61,9 +84,13 @@ export default function NodeTableRow({
         location,
         longitude,
         latitude,
+        battery
       } }
     );
   }
+
+  const daysCount = daysDiff(battery);
+  const batteryPercent = daysCount > 10 ? 0: (100 - daysCount*10);
 
   return (
     <>
@@ -83,12 +110,12 @@ export default function NodeTableRow({
 
         <TableCell align="center">{nodeAddress}</TableCell>
 
-        <TableCell align="center">{battery}</TableCell>
+        <TableCell align="center">{batteryPercent }</TableCell>
 
         <TableCell align="center">
           <Label color={(status === 'error' && 'error') || 'success'}>{status}</Label>
         </TableCell>
-
+        
         <TableCell align="center">{latitude}</TableCell>
 
         <TableCell align="center">{longitude}</TableCell>
@@ -110,6 +137,12 @@ export default function NodeTableRow({
           sx: { width: 140 },
         }}
       >
+
+        <MenuItem onClick={handleResetBattryButton}>
+          <Iconify icon="eva:battery-outline" sx={{ mr: 2 }} />
+          Battery
+        </MenuItem>
+
         <MenuItem onClick={handleModifyButton}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit

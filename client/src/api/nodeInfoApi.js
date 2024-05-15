@@ -22,15 +22,17 @@ export const createNode = async (nodeAddress,location,latitude,longitude) => {
   return response.data;
 };
 
-export const updateNode = async (id, nodeAddress, location, latitude, longitude) => { 
+export const updateNode = async (id, nodeAddress, location, latitude, longitude, battery) => { 
   const lat = +latitude;// double 형태로 변환
   const long = +longitude;// double 형태로 변환
+
   const requestBody = {
     id,
     nodeAddress,
     location,
     latitude: lat,
     longitude: long,
+    battery
   };
 
   console.log("asdf", requestBody);

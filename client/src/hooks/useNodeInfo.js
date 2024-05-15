@@ -25,7 +25,7 @@ export const useNodeInfo = () => {
     });
 
     const updateNodeMutation = useMutation({
-        mutationFn: (newNode) => updateNode(newNode.id, newNode.nodeAddress, newNode.location, newNode.latitude, newNode.longitude),
+        mutationFn: (newNode) => updateNode(newNode.id, newNode.nodeAddress, newNode.location, newNode.latitude, newNode.longitude, newNode.battery),
         onSuccess: (d, variables, context) => {
             console.log(d);
             refetch();

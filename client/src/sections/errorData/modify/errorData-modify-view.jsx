@@ -13,7 +13,7 @@ import { alpha, useTheme } from '@mui/material/styles';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { useNodeInfo } from 'src/hooks/useNodeInfo';
+import { useErrorDataMutation } from 'src/hooks/useErrorData';
 
 import { bgGradient } from 'src/theme/css';
 
@@ -23,18 +23,12 @@ import { bgGradient } from 'src/theme/css';
 export default function ErrorDataModifyView()  {
   const theme = useTheme();
 
-  const { updateNodeMutation } = useNodeInfo();
+  const { updateErrorDataMutation } = useErrorDataMutation();
 
   const router = useRouter();
   const routerLocation = useLocation();
 
-  const { id,
-    date,
-    done,
-    errorMsg,
-    loraContent,
-    errorCause,
-    solution } = routerLocation.state || {};
+  const { id,date,done,errorMsg,loraContent,errorCause,solution } = routerLocation.state || {};
 
   const [doneState, setDoneState] = useState(done);
   const [errorMsgState, setErrorMsgState] = useState(errorMsg);
@@ -49,15 +43,15 @@ export default function ErrorDataModifyView()  {
 
   const handleCompleteButton = () => {
 
-    const newNode = {
+    const updatedData = {
         id,
-        // nodeAddress,
-        // location: locationState,
-        // latitude: latitudeState,
-        // longitude: longitudeState,
+        date,
+        errorCause,
+        solution,
+        done
       };
 
-    updateNodeMutation.mutate(newNode);
+    updateErrorDataMutation.mutate(updatedData);
     router.back();
   };
 

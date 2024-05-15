@@ -2,8 +2,8 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 
 import { todayDate } from 'src/utils/format-time';
 
-import { fetchErrorData } from 'src/api/errorDataApi';
 import useErrorDataStore from 'src/store/errorDataStore';
+import { fetchErrorData, updateErrorData } from 'src/api/errorDataApi';
 
 // ----------------------------------------------------------------
 export const useErrorDataQuery = () => {
@@ -25,6 +25,7 @@ export const useErrorDataMutation = () => {
     const { selectedDate, setSelectedErrorData } = useErrorDataStore();
 
     const selectedErrorDataMutation = useMutation({
+        queryKey: ['errorDataMutation'],
         mutationFn: () => fetchErrorData(selectedDate),
         onSuccess: (d, variables, context) => {
             setSelectedErrorData(d.data);
@@ -35,6 +36,20 @@ export const useErrorDataMutation = () => {
         retry: 0,
     });
 
+    const updateErrorDataMutation = useMutation({
+        mutationFn: (updatedData) => updateErrorData(updatedData.id, updatedData.date, updatedData.errorCause, updatedData.solution, updatedData.done ),
+        onSuccess: (d, variables, context) => {
+            console.log(d);
+            selectedErrorDataMutation.mutate();
+        },
+        onError: (e, variables, context) => {
+            console.log(e);
+        },
+        onSettled: () => {
+        
+        },
+    });
 
-    return { mutate: selectedErrorDataMutation.mutate };
+
+    return { selectedErrorDataMutation, updateErrorDataMutation };
 };

@@ -99,7 +99,7 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4" sx={{ my: 3 }}>Sign in to AirPlay</Typography>
+          <Typography variant="h4" sx={{ my: 3 }}>Sign in to Micro Measurable</Typography>
 
 
           <GoogleSignInButton />

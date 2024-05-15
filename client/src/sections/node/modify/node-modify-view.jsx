@@ -26,7 +26,7 @@ export default function NodeModifyView()  {
   const router = useRouter();
   const routerLocation = useLocation();
 
-  const { id, nodeAddress, location, latitude, longitude } = routerLocation.state || {};
+  const { id, nodeAddress, location, latitude, longitude, battery } = routerLocation.state || {};
 
   const [locationState, setLocationState] = useState(location);
   const [latitudeState, setLatitudeState] = useState(latitude);
@@ -46,6 +46,7 @@ export default function NodeModifyView()  {
         location: locationState,
         latitude: latitudeState,
         longitude: longitudeState,
+        battery
       };
 
     updateNodeMutation.mutate(newNode);
