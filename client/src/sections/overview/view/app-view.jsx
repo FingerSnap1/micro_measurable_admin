@@ -37,6 +37,8 @@ export default function AppView() {
 
   const [ managerName, setManagerName ] = useState('');
 
+  const [ nodeBattery, setNodeBattery ] = useState('');
+
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => { // 에러 데이터
@@ -59,13 +61,21 @@ export default function AppView() {
         return acc;
       },{});
 
+      const nodeBatteries = nodes.reduce((acc, node) => {
+        acc[node.nodeAddress] = node.battery;
+        return acc;
+      },{});
+
       const nodeManager = managers.filter((manager) => nodeLocations[manager.nodeAddress] === selectedLocation)[0] || '';
       setManagerName(managerName ?  nodeManager.managerName : myInfo.managerName);
 
       setSelectedLocation(selectedLocation === '' ? nodeLocations[myInfo.nodeAddress]: selectedLocation);
 
-      setFilteredData(rawData.filter(data => data.nodeInfo.location === selectedLocation));// ❗️수정필요 - selectedLocation으로 수정 필요
-  }, [setSelectedLocation, selectedLocation, managers, nodes, auth.currentUser, rawData, managerName]);
+      setNodeBattery(myInfo ? nodeBatteries[nodeManager.nodeAddress] : '');
+
+      setFilteredData(rawData.filter(data => data.nodeInfo.location === selectedLocation));
+
+  }, [rawData, setSelectedLocation, selectedLocation, managers, nodes, auth.currentUser, managerName]);
 
   return (
     <Container maxWidth="xl">
@@ -87,6 +97,7 @@ export default function AppView() {
         <Grid container direction="column" spacing={3} xs={12} md={6} lg={4}>
           <Grid>
             <AppNodeState
+              battery={ nodeBattery }
               icon={ <Battery60Icon style={{ color: "black", fontSize: 25,}}/>}
             />
           </Grid>

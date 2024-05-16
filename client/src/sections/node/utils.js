@@ -55,7 +55,7 @@ export function applyFilter({ inputData, comparator, filterName }) {
   return inputData;
 }
 
-export function daysDiff(battery){
+export function calculateBattery(battery){
 
   const targetDate = new Date(battery); 
   const today = new Date();
@@ -68,5 +68,8 @@ export function daysDiff(battery){
   const diffTime = targetDate - today;         // 두 날짜의 차이(밀리초 단위)
   const diffDays = diffTime / (1000 * 60 * 60 * 24); // 밀리초를 일수로 변환
 
-  return Math.round(diffDays);  
+  const daysDiff = Math.round(diffDays); // - 값으로 나와서
+  const batteryPercent = daysDiff > 10 ? 0: (100 + daysDiff*10);
+
+  return batteryPercent;  
 }

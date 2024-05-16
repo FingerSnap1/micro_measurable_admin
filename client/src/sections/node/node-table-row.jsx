@@ -17,7 +17,7 @@ import { useNodeInfo } from 'src/hooks/useNodeInfo';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
-import { daysDiff } from './utils';
+import { calculateBattery } from './utils';
 
 // ----------------------------------------------------------------------
 
@@ -89,8 +89,6 @@ export default function NodeTableRow({
     );
   }
 
-  const daysCount = daysDiff(battery);
-  const batteryPercent = daysCount > 10 ? 0: (100 - daysCount*10);
 
   return (
     <>
@@ -110,7 +108,7 @@ export default function NodeTableRow({
 
         <TableCell align="center">{nodeAddress}</TableCell>
 
-        <TableCell align="center">{batteryPercent }</TableCell>
+        <TableCell align="center">{ calculateBattery(battery) }</TableCell>
 
         <TableCell align="center">
           <Label color={(status === 'error' && 'error') || 'success'}>{status}</Label>
