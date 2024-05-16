@@ -5,7 +5,6 @@ import { Wrapper } from "@googlemaps/react-wrapper";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import Battery60Icon from '@mui/icons-material/Battery60';
 
 import googleMapID from 'src/config/googleMapId';
 import useNodeInfoStore from 'src/store/nodeInfoStore';
@@ -98,7 +97,6 @@ export default function AppView() {
           <Grid>
             <AppNodeState
               battery={ nodeBattery }
-              icon={ <Battery60Icon style={{ color: "black", fontSize: 25,}}/>}
             />
           </Grid>
 
