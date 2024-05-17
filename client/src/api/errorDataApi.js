@@ -12,13 +12,13 @@ export const fetchErrorData = async (date) => {
     return response.data;
 };
 
-export const updateErrorData= async (id, date, errorCause, solution, done) => { 
+export const updateErrorData= async (id, date, errCause, solution, done) => { 
     const requestBody = {
-        date,
+        date : date.split(' ')[0],
       id,
-      errorCause,
+      errCause,
       solution,
-      done
+      done,
     };
   
     console.log("updateErrorData: ", requestBody);

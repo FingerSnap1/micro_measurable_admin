@@ -28,9 +28,9 @@ export default function ErrorDataModifyView()  {
   const router = useRouter();
   const routerLocation = useLocation();
 
-  const { id,date,done,errorMsg,loraContent,errorCause,solution } = routerLocation.state || {};
+  const { id, date, done, errorMsg, loraContent, errorCause, solution } = routerLocation.state || {};
 
-  const [doneState, setDoneState] = useState(done);
+  const [doneState, setDoneState] = useState(JSON.parse(done));
   const [errorMsgState, setErrorMsgState] = useState(errorMsg);
   const [loraContentState, setLoraContentState] = useState(loraContent);
   const [errorCauseState, setErrorCauseState] = useState(errorCause);
@@ -46,9 +46,9 @@ export default function ErrorDataModifyView()  {
     const updatedData = {
         id,
         date,
-        errorCause,
-        solution,
-        done
+        errorCause : errorCauseState,
+        solution : solutionState,
+        done : doneState
       };
 
     updateErrorDataMutation.mutate(updatedData);

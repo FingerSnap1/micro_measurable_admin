@@ -23,7 +23,7 @@ const WideFixedTableCell = styled(TableCell)`
 
 const DoneCell = styled(TableCell)`
   min-width: 100px;
-  color: ${(props) => props.done ? 'black' : 'red'};
+  color: ${(props) => props.done === 'true' ? 'black' : 'red'};
 `;
 
 export default function ErrorTableRow({
@@ -48,6 +48,7 @@ export default function ErrorTableRow({
   const navigate = useNavigate();
 
   const handleModifyButton = () => {
+    console.log("asdfasdf",id);
     setOpen(null);
     navigate(
       'modify', 
@@ -68,7 +69,7 @@ export default function ErrorTableRow({
     <>
       <TableRow hover tabIndex={-1}>
 
-      <DoneCell align="center" done={done}>{done ? "완료": "미완료"}</DoneCell>
+      <DoneCell align="center" done={done}>{done === 'true' ? "완료": "미완료"}</DoneCell>
 
         <WideFixedTableCell align="center">{date}</WideFixedTableCell>
 

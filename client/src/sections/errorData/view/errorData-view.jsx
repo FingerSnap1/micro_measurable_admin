@@ -61,6 +61,8 @@ export default function ErrorDataView() {
     //   console.log(selectedLocation, selectedErrorData);
     //   setTableData(selectedErrorData.filter(row => row.nodeInfo.location === selectedLocation));
     // }
+
+    console.log("selectedErrorData",selectedErrorData);
     setTableData(selectedErrorData);
 
   }, [selectedLocation, selectedErrorData]);
@@ -99,7 +101,8 @@ export default function ErrorDataView() {
                   .map((row) => (
                     <ErrorTableRow
                       key={row.id}
-                      done={row.done ? 'true': undefined }
+                      id={row.id}
+                      done={row.done.toString()}
                       date={`${row.date} ${row.timestamp}`}
                       errorMsg={row.errMsg}
                       loraContent={row.loraContent}

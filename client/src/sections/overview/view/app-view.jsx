@@ -42,11 +42,12 @@ export default function AppView() {
 
   useEffect(() => { // 에러 데이터
     const filteredAndMappedList = errorData
-      .filter(item => !item.done) // Filter out items where done is false
+      // .filter(item => !item.done) // Filter out items where done is false
       .sort((a, b) => b.timestamp.localeCompare(a.timestamp)) // Sort by timestamp desc
-      .map(item => ({ id: item.id, name: item.errMsg, timestamp: item.timestamp })); // Map to the required format
+      .map(item => ({ id: item.id, name: item.errMsg, timestamp: item.timestamp, done: item.done })); // Map to the required format
 
       setErrorDataList(filteredAndMappedList);
+
   }, [errorData]);
 
 
@@ -102,7 +103,7 @@ export default function AppView() {
 
            <Grid>
           <AppErrorCheck
-            title="에러 데이터 체크 리스트"
+            title="에러 데이터 리스트"
             list={ errorDataList }
           />
         </Grid>
