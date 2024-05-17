@@ -45,6 +45,7 @@ BatteryIcon.propTypes = {
 
 export default function AppNodeState({ battery, sx, ...other }) {
 
+  const batteryState = calculateBattery( battery ) ?? '0';
 
   return (
     <Card
@@ -62,10 +63,10 @@ export default function AppNodeState({ battery, sx, ...other }) {
       <Stack spacing={0.5}>
       <Typography sx={{ fontSize: '0.8rem' }}>{ todayDate() }</Typography>
       <Stack spacing={0.5} direction="row">
-      <Typography variant="h5"> Active </Typography>
+      <Typography variant="h5"> { `${ batteryState > 0 ? 'Active' : 'Inactive'} `} </Typography>
       
-      <Typography variant="h5"> {`| ${ calculateBattery( battery ) ?? '0'} % `}</Typography>
-      <BatteryIcon level={`${ calculateBattery( battery ) ?? '0'}`}/>
+      <Typography variant="h5"> {`| ${ batteryState } % `}</Typography>
+      <BatteryIcon level={`${ batteryState }`}/>
       </Stack>
       <Typography sx={{ fontSize: '0.8rem' }} >{ `예상 배터리 교체일: ${ changeBatteryDate(battery) }` }</Typography>
       </Stack>

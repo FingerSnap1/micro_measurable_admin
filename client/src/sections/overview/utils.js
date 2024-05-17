@@ -24,7 +24,7 @@ export function calculateBattery(battery){
         const diffDays = diffTime / (1000 * 60 * 60 * 24); // 밀리초를 일수로 변환
     
         const daysDiff = Math.round(diffDays); // - 값으로 나와서
-        const batteryPercent = daysDiff > 10 ? 0: (100 + daysDiff*10);
+        const batteryPercent = daysDiff <= -10 ? 0 : (100 + daysDiff*10);
         
         return batteryPercent;  
     }
