@@ -41,7 +41,7 @@ export default function ManagerView() {
 
   const [selected, setSelected] = useState([]);
 
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('managerName');
 
   const [filterName, setFilterName] = useState('');
 
@@ -101,7 +101,7 @@ export default function ManagerView() {
   const dataFiltered = applyFilter({
     inputData: managers,
     comparator: getComparator(order, orderBy),
-    filterName,
+    filterName: filterName || '',
   });
 
   const notFound = !dataFiltered.length && !!filterName;
@@ -141,10 +141,10 @@ export default function ManagerView() {
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'managerName', label: 'Name' },
-                  { id: 'email', label: 'Email' },
-                  { id: 'nodeAddress', label: 'NodeAddress' },
-                  { id: 'location', label: 'Location' },
+                  { id: 'managerName', label: 'managerName' },
+                  { id: 'email', label: 'email' },
+                  { id: 'nodeAddress', label: 'nodeAddress' },
+                  { id: 'location', label: 'location' },
                   { id: '' },
                 ]}
               />

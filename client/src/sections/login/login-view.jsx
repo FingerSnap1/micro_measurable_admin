@@ -1,41 +1,41 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
 import Box from '@mui/material/Box';
 // import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 // import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import TextField from '@mui/material/TextField';
+// import Divider from '@mui/material/Divider';
+// import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import LoadingButton from '@mui/lab/LoadingButton';
+// import IconButton from '@mui/material/IconButton';
+// import LoadingButton from '@mui/lab/LoadingButton';
 import { alpha, useTheme } from '@mui/material/styles';
-import InputAdornment from '@mui/material/InputAdornment';
+// import InputAdornment from '@mui/material/InputAdornment';
 
-import { useRouter } from 'src/routes/hooks';
+// import { useRouter } from 'src/routes/hooks';
 
 import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
-import Iconify from 'src/components/iconify';
+// import Iconify from 'src/components/iconify';
 import GoogleSignInButton from 'src/components/login/googleLogin';
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
   const theme = useTheme();
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
 
-  const handleClick = () => {
-    router.push('/dashboard');
-  };
+  // const handleClick = () => {
+  //   router.push('/dashboard');
+  // };
 
   const renderForm = (
     <>
-      <Stack spacing={3}>
+      {/* <Stack spacing={3}>
         <TextField name="email" label="Email address" />
 
         <TextField
@@ -52,7 +52,7 @@ export default function LoginView() {
             ),
           }}
         />
-      </Stack>
+      </Stack> */}
 
       {/* <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }}>
         <Link variant="subtitle2" underline="hover">
@@ -60,7 +60,7 @@ export default function LoginView() {
         </Link>
       </Stack> */}
 
-      <LoadingButton sx={{ my: 3 }}
+      {/* <LoadingButton sx={{ my: 3 }}
         fullWidth
         size="large"
         type="submit"
@@ -69,7 +69,7 @@ export default function LoginView() {
         onClick={handleClick}
       >
         Login
-      </LoadingButton>
+      </LoadingButton> */}
     </>
   );
 
@@ -105,11 +105,11 @@ export default function LoginView() {
           <GoogleSignInButton />
           
 
-          <Divider sx={{ my: 3 }}>
+          {/* <Divider sx={{ my: 3 }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               OR
             </Typography>
-          </Divider>
+          </Divider> */}
 
           {renderForm}
         </Card>
