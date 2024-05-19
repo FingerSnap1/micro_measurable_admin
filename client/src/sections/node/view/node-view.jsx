@@ -33,8 +33,6 @@ export default function NodeView() {
 
   const [order, setOrder] = useState('asc');
 
-  const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('location');
 
   const [filterName, setFilterName] = useState('');
@@ -47,33 +45,6 @@ export default function NodeView() {
       setOrder(isAsc ? 'desc' : 'asc');
       setOrderBy(id);
     }
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = nodes.map((n) => n.location);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -116,7 +87,6 @@ export default function NodeView() {
 
       <Card>
         <UserTableToolbar
-          numSelected={selected.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
         />
@@ -127,10 +97,7 @@ export default function NodeView() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={nodes.length}
-                numSelected={selected.length}
                 onRequestSort={handleSort}
-                onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'location', label: 'Location' ,align: 'left' },
                   { id: 'nodeAddress', label: 'NodeAddress' },
@@ -151,11 +118,8 @@ export default function NodeView() {
                       nodeAddress={row.nodeAddress}
                       location={row.location}
                       longitude={row.longitude}
-                      status='active'
                       latitude={row.latitude}
                       battery={row.battery}
-                      selected={selected.indexOf(row.location) !== -1}
-                      handleClick={(event) => handleClick(event, row.location)}
                     />
                   ))}
 

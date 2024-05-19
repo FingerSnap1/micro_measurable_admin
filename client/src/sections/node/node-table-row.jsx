@@ -6,7 +6,6 @@ import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
@@ -24,13 +23,10 @@ import { calculateBattery } from './utils';
 export default function NodeTableRow({
   id,
   nodeAddress,
-  selected,
   location,
   latitude,
   longitude,
   battery,
-  status,
-  handleClick,
 }) {
 
   const { deleteNodeMutation, updateNodeMutation } = useNodeInfo();
@@ -89,16 +85,14 @@ export default function NodeTableRow({
     );
   }
 
+  const batteryPercent = calculateBattery(battery);
 
   return (
     <>
-      <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
-        <TableCell padding="checkbox">
-          <Checkbox disableRipple checked={selected} onChange={handleClick} />
-        </TableCell>
+      <TableRow hover >
 
         <TableCell component="th" scope="row" padding="none" align="center" >
-          <Stack direction="row" alignItems="center" spacing={2}>
+          <Stack direction="row" alignItems="center" spacing={2} pl={2}>
             <Avatar alt={location} src="/assets/images/node.png" />
             <Typography variant="subtitle2" noWrap>
               {location}
@@ -108,10 +102,12 @@ export default function NodeTableRow({
 
         <TableCell align="center">{nodeAddress}</TableCell>
 
-        <TableCell align="center">{ calculateBattery(battery) }</TableCell>
+        <TableCell align="center">{ `${batteryPercent}%` }</TableCell>
 
         <TableCell align="center">
-          <Label color={(status === 'error' && 'error') || 'success'}>{status}</Label>
+          <Label color={batteryPercent > 0 ? 'success' : 'error'}>
+            {batteryPercent > 0 ? 'active' : 'inactive'}
+          </Label>
         </TableCell>
         
         <TableCell align="center">{latitude}</TableCell>
@@ -158,11 +154,8 @@ export default function NodeTableRow({
 NodeTableRow.propTypes = {
   id: PropTypes.any,
   nodeAddress: PropTypes.any,
-  handleClick: PropTypes.func,
   battery: PropTypes.any,
   location: PropTypes.any,
   latitude: PropTypes.any,
   longitude: PropTypes.any,
-  selected: PropTypes.any,
-  status: PropTypes.string,
 };

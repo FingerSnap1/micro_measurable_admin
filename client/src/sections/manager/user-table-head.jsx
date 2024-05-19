@@ -13,10 +13,8 @@ import { visuallyHidden } from './utils';
 export default function UserTableHead({
   order,
   orderBy,
-  rowCount,
   headLabel,
   onRequestSort,
-  onSelectAllClick,
 }) {
   const onSort = (property) => (event) => {
     onRequestSort(event, property);
@@ -56,8 +54,6 @@ export default function UserTableHead({
 UserTableHead.propTypes = {
   order: PropTypes.oneOf(['asc', 'desc']),
   orderBy: PropTypes.string,
-  rowCount: PropTypes.number,
   headLabel: PropTypes.array,
   onRequestSort: PropTypes.func,
-  onSelectAllClick: PropTypes.func,
 };
