@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
 import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
@@ -16,7 +15,6 @@ export default function UserTableHead({
   orderBy,
   rowCount,
   headLabel,
-  numSelected,
   onRequestSort,
   onSelectAllClick,
 }) {
@@ -27,18 +25,11 @@ export default function UserTableHead({
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-          />
-        </TableCell>
 
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.align || 'left'}
+            align={headCell.align || 'center'}
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ width: headCell.width, minWidth: headCell.minWidth }}
           >
@@ -67,7 +58,6 @@ UserTableHead.propTypes = {
   orderBy: PropTypes.string,
   rowCount: PropTypes.number,
   headLabel: PropTypes.array,
-  numSelected: PropTypes.number,
   onRequestSort: PropTypes.func,
   onSelectAllClick: PropTypes.func,
 };
