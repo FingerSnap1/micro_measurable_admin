@@ -36,7 +36,7 @@
   },
   "scripts": {
     "server": "nodemon server/server.js",
-    "client": "npm run dev --prefix client",
+    "client": "npm run dev:host --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   }
 }
