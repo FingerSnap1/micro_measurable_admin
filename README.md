@@ -3,6 +3,7 @@
 ![micro_measurable_admin_cover](https://github.com/likelion-project-README/README/assets/82192923/ad4716ce-9889-4ce7-aba7-f67de8587199)
 
 - 배포 URL : http://13.125.164.216:3000/
+- 참고 영상 : https://www.youtube.com/watch?v=nm_seyMrYFw&feature=youtu.be
 - Test 불가능 (허용된 관리자만 접근 가능)
 
 <br>
@@ -19,7 +20,8 @@
 ## 팀원 구성
 
 <div align="center">
-
+    <img src="https://github.com/LeeShinwon/micro_measurable_admin/assets/82192923/4cad8f46-f0ab-4b80-b201-ae5295c43353" width=700>
+    <br>
 | **김예인** | **이신원** | **최은총** | **한상화** |
 | :------: |  :------: | :------: | :------: |
 | [<img src="https://avatars.githubusercontent.com/u/106502312?v=4" height=150 width=150> <br/> @yeon1615](https://github.com/yeon1615) | [<img src="https://avatars.githubusercontent.com/u/112460466?v=4" height=150 width=150> <br/> @Cheorizzang](https://github.com/Cheorizzang) | [<img src="https://avatars.githubusercontent.com/u/112460506?v=4" height=150 width=150> <br/> @heejiyang](https://github.com/heejiyang) | [<img src="https://avatars.githubusercontent.com/u/76766459?v=4" height=150 width=150> <br/> @journey-ji](https://github.com/journey-ji) |
