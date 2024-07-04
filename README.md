@@ -30,7 +30,7 @@
 <br>
 
 ## 3. 시스템 구조
-[](https://github.com/LeeShinwon/micro_measurable_admin/blob/main/structure.png)
+![](https://github.com/LeeShinwon/micro_measurable_admin/blob/main/structure.png)
 
 ## 4. 개발 환경
 
