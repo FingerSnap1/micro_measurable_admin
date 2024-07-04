@@ -5,7 +5,7 @@
 
 <br>
 
-## 프로젝트 소개
+## 1. 프로젝트 소개
 
 - 한동대학교 전산전자공학부 2024-1 캡스톤 디자인2 프로젝트로 구현한 대기환경 모니터링 시스템, Micro Measurable 관리자 웹사이트입니다.
 - 설치된 대기환경모니터링 시스템을 전반적으로 관리하기 위해, 측정값, 에러, 배터리, 관리자 정보 등을 다룹니다.
@@ -14,7 +14,7 @@
 
 <br>
 
-## 팀원 구성
+## 2. 팀원 구성
 
 <div align="center">
     <img src="https://github.com/LeeShinwon/micro_measurable_admin/assets/82192923/4cad8f46-f0ab-4b80-b201-ae5295c43353" width=700>
@@ -29,7 +29,10 @@
 
 <br>
 
-## 1. 개발 환경
+## 3. 시스템 구조
+[](https://github.com/LeeShinwon/micro_measurable_admin/blob/main/structure.png)
+
+## 4. 개발 환경
 
 - Front : React, VITE, MUI
 - Back-end : NODE.JS, FIREBASE
@@ -39,7 +42,7 @@
 - 디자인 : [Figma](https://www.figma.com/design/aiXTcvZdEUs0Ji5YNyiMwH/%EC%BA%A1%EC%8A%A4%ED%86%A42-%EC%9B%B9?node-id=260%3A78&t=ZfmlI2ikT0HOWtn7-1)
 <br>
 
-## 2. 기술 스택
+## 5. 기술 스택
 
 ### React
 - 컴포넌트화를 통해 추후 유지보수와 재사용성을 고려했습니다.
@@ -64,7 +67,7 @@
 
 <br>
 
-## 3. 프로젝트 구조
+## 6. 프로젝트 구조
 
 ```
 ├── README.md
